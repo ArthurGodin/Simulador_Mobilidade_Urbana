@@ -66,6 +66,8 @@ import java.util.HashSet;
                 caminho.enfileirar(pilha.desempilhar());
             }
 
+            System.out.println("asdfasdfasdf");
+
             return caminho;
         }
     }
