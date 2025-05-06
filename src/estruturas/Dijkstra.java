@@ -1,11 +1,11 @@
 package estruturas;
 
-public class Dijkstra {import java.util.HashMap;
+import java.util.HashMap;
 import java.util.HashSet;
 
-    public class Dijkstra {
+public class Dijkstra {
 
-        public static FilaEncadeada<Vertice> encontrarMenorCaminho(Grafo grafo, Vertice origem, Vertice destino) {
+        public static FilaEncadeada <Vertice> encontrarMenorCaminho(Grafo grafo, Vertice origem, Vertice destino) {
             HashMap<Vertice, Integer> distancias = new HashMap<>();
             HashMap<Vertice, Vertice> anteriores = new HashMap<>();
             HashSet<Vertice> visitados = new HashSet<>();
@@ -66,34 +66,6 @@ import java.util.HashSet;
                 caminho.enfileirar(pilha.desempilhar());
             }
 
-            System.out.println("asdfasdfasdf");
-
             return caminho;
         }
-    }
-
-
-
-
-
-
-    class Vertice {
-        String nome;
-        // métodos como getNome(), equals(), hashCode()
-    }
-
-    class Aresta {
-        Vertice origem;
-        Vertice destino;
-        int custo;
-    }
-
-    class Grafo {
-        ListaEncadeada<Vertice> vertices;
-        ListaEncadeada<Aresta> arestas;
-
-        ListaEncadeada<Aresta> obterArestasDe(Vertice v){
-            return null;
-        }
-    }
 }

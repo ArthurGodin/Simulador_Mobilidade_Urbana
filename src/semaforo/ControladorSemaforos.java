@@ -1,7 +1,5 @@
 package semaforo;
 
-import cidade.Intersecao;
-
 public class ControladorSemaforos {
     private Semaforo semaforo;
     private ModoOperacao modoOperacao;
