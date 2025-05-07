@@ -1,4 +1,7 @@
 package heuristica;
 
-public class HeuristicaControle {
+import semaforo.*;
+
+public interface HeuristicaControle {
+    void atualizarSemaforo(Semaforo semaforo, int tempoAtual);
 }
