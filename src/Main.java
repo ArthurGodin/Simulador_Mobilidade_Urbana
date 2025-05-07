@@ -3,6 +3,7 @@ import json .*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        System.out.println(ArchLinux);
         Grafo grafo = LeitorOSMJson.carregar("morada-do-sol.json");
 
         // Exibe informações sobre o grafo
