@@ -54,5 +54,16 @@ public class LeitorOSMJson {
 
         return grafo;
     }
+
+    private static Vertice buscarVerticePorId(Lista<Vertice> lista, long id) {
+        for (int i = 0; i < lista.tamanho(); i++) {
+            Vertice v = lista.obter(i);
+            if (v.getId() == id) {
+                return v;
+            }
+        }
+        return null;
+    }
+
 }
 
