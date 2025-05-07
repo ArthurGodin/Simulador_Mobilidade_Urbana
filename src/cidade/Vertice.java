@@ -1,8 +1,8 @@
 package cidade;
 
 public class Vertice {
-    long id;
-    double lat, lon;
+    private long id;
+    private double lat, lon;
 
     public Vertice(long id, double lat, double lon) {
         this.id = id;
@@ -11,8 +11,14 @@ public class Vertice {
     }
 
     public long getId() {
-        return this.id;
+        return id;
     }
 
-}
+    public double getLat() {
+        return lat;
+    }
 
+    public double getLon() {
+        return lon;
+    }
+}

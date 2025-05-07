@@ -1,6 +1,4 @@
 package estruturas;
-import cidade.*;
-
 
 public class Lista<T> {
     private No<T> inicio;
@@ -53,16 +51,4 @@ public class Lista<T> {
     public boolean estaVazia() {
         return tamanho == 0;
     }
-
-    public static Vertice buscarVerticePorId(Lista<Vertice> lista, long id) {
-        for (int i = 0; i < lista.tamanho(); i++) {
-            Vertice v = lista.obter(i);
-            if (v.getId() == id) {
-                return v;
-            }
-        }
-        return null;
-    }
-
-
 }

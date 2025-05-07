@@ -2,27 +2,19 @@ package json;
 
 import org.json.*;
 import java.nio.file.*;
-import java.util.*;
 import cidade.*;
 import estruturas.*;
-
-import static estruturas.Lista.buscarVerticePorId;
-
 
 public class LeitorOSMJson {
 
     public static Grafo carregar(String caminho) throws Exception {
-        // Lê o arquivo JSON
         String conteudo = new String(Files.readAllBytes(Paths.get(caminho)));
         JSONObject json = new JSONObject(conteudo);
         JSONArray elementos = json.getJSONArray("elements");
 
-        // Criação do grafo
         Grafo grafo = new Grafo();
         Lista<Vertice> mapaNos = new Lista<>();
-        Lista<long[]> conexoesTemporarias = new Lista<>();
 
-        // Processamento dos nodes
         for (int i = 0; i < elementos.length(); i++) {
             JSONObject elemento = elementos.getJSONObject(i);
             String tipo = elemento.getString("type");
@@ -36,7 +28,6 @@ public class LeitorOSMJson {
                 mapaNos.adicionar(v);
             }
 
-            // Processamento das ways
             if (tipo.equals("way") && elemento.has("nodes")) {
                 JSONArray nos = elemento.getJSONArray("nodes");
                 boolean isOneway = elemento.has("tags") && elemento.getJSONObject("tags").has("oneway");
@@ -46,7 +37,7 @@ public class LeitorOSMJson {
                     Vertice origem = buscarVerticePorId(mapaNos, origemId);
                     Vertice destino = buscarVerticePorId(mapaNos, destinoId);
                     if (origem != null && destino != null) {
-                        grafo.adicionarAresta(new Aresta(origem, destino, isOneway));
+                        grafo.adicionarAresta(origem, destino, isOneway);
                     }
                 }
             }
@@ -64,6 +55,4 @@ public class LeitorOSMJson {
         }
         return null;
     }
-
 }
-
