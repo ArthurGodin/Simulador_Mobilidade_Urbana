@@ -1,5 +1,7 @@
 package estruturas;
 
+import cidade.Vertice;
+
 public class Pilha<T> {
     private No<T> topo;
     private int tamanho;
@@ -26,14 +28,14 @@ public class Pilha<T> {
         tamanho++;
     }
 
-    public T desempilhar() {
+    public Vertice desempilhar() {
         if (topo == null) {
             return null;
         }
         T dado = topo.dado;
         topo = topo.abaixo;
         tamanho--;
-        return dado;
+        return (Vertice) dado;
     }
 
     public T topo() {

@@ -1,53 +1,43 @@
 package estruturas;
 
 public class Fila<T> {
-    private No<T> inicio;
-    private No<T> fim;
-    private int tamanho;
-
     private static class No<T> {
         T dado;
         No<T> proximo;
 
         No(T dado) {
             this.dado = dado;
-            this.proximo = null;
         }
     }
 
-    public Fila() {
-        inicio = null;
-        fim = null;
-        tamanho = 0;
-    }
+    private No<T> primeiro;
+    private No<T> ultimo;
+    private int tamanho;
 
     public void enfileirar(T elemento) {
-        No<T> novo = new No<>(elemento);
-        if (fim == null) {
-            inicio = novo;
-            fim = novo;
+        No<T> novoNo = new No<>(elemento);
+        if (estaVazia()) {
+            primeiro = novoNo;
         } else {
-            fim.proximo = novo;
-            fim = novo;
+            ultimo.proximo = novoNo;
         }
+        ultimo = novoNo;
         tamanho++;
     }
 
     public T desenfileirar() {
-        if (inicio == null) {
-            return null;
-        }
-        T dado = inicio.dado;
-        inicio = inicio.proximo;
-        if (inicio == null) {
-            fim = null;
+        if (estaVazia()) return null;
+        T elemento = primeiro.dado;
+        primeiro = primeiro.proximo;
+        if (primeiro == null) {
+            ultimo = null;
         }
         tamanho--;
-        return dado;
+        return elemento;
     }
 
-    public T primeiro() {
-        return (inicio != null) ? inicio.dado : null;
+    public T frente() {
+        return estaVazia() ? null : primeiro.dado;
     }
 
     public boolean estaVazia() {

@@ -1,25 +1,21 @@
 package semaforo;
 import heuristica.*;
 
+import cidade.Intersecao;
+import heuristica.*;
+import java.util.List;
+
 public class ControladorSemaforos {
     private HeuristicaControle heuristica;
 
-    public ControladorSemaforos(ModoOperacao modo) {
-        switch (modo) {
-            case CICLO_FIXO:
-                this.heuristica = new HeuristicaCicloFixo(10, 3, 7);
-                break;
-            case TEMPO_ESPERA:
-                this.heuristica = new HeuristicaTempoEspera();
-                break;
-            case CONSUMO:
-                this.heuristica = new HeuristicaConsumo();
-                break;
-        }
+    public ControladorSemaforos(HeuristicaControle heuristica) {
+        this.heuristica = heuristica;
     }
 
-    public void atualizarSemaforo(Semaforo s, int tempoAtual) {
-        heuristica.atualizarSemaforo(s, tempoAtual);
+    public void controlarSemaforos(List<Intersecao> intersecoes, int tempoAtual) {
+        for (Intersecao intersecao : intersecoes) {
+            heuristica.atualizarSemaforo(intersecao.getSemaforo(), tempoAtual);
+        }
     }
 }
 

@@ -2,15 +2,17 @@ package estruturas;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import cidade.*;
+
 
 public class Dijkstra {
 
-        public static FilaEncadeada <Vertice> encontrarMenorCaminho(Grafo grafo, Vertice origem, Vertice destino) {
+        public static Fila<Vertice> encontrarMenorCaminho(Grafo grafo, Vertice origem, Vertice destino) {
             HashMap<Vertice, Integer> distancias = new HashMap<>();
             HashMap<Vertice, Vertice> anteriores = new HashMap<>();
             HashSet<Vertice> visitados = new HashSet<>();
 
-            ListaEncadeada<Vertice> todosVertices = grafo.vertices;
+            Lista<Vertice> todosVertices = grafo.vertices;
             for (int i = 0; i < todosVertices.tamanho(); i++) {
                 Vertice v = todosVertices.obter(i);
                 distancias.put(v, Integer.MAX_VALUE);
@@ -23,12 +25,12 @@ public class Dijkstra {
                 if (atual == null) break;
                 visitados.add(atual);
 
-                ListaEncadeada<Aresta> adjacentes = grafo.obterArestasDe(atual);
+                Lista<Aresta> adjacentes = grafo.obterArestas("");
                 for (int i = 0; i < adjacentes.tamanho(); i++) {
                     Aresta aresta = adjacentes.obter(i);
-                    Vertice vizinho = aresta.destino;
+                    Vertice vizinho = aresta.getDestino();
                     if (!visitados.contains(vizinho)) {
-                        int novaDist = distancias.get(atual) + aresta.custo;
+                        int novaDist = (int) (distancias.get(atual) + aresta.getPeso());
                         if (novaDist < distancias.get(vizinho)) {
                             distancias.put(vizinho, novaDist);
                             anteriores.put(vizinho, atual);
@@ -52,8 +54,8 @@ public class Dijkstra {
             return menor;
         }
 
-        private static FilaEncadeada<Vertice> construirCaminho(HashMap<Vertice, Vertice> anteriores, Vertice origem, Vertice destino) {
-            PilhaEncadeada pilha = new PilhaEncadeada();
+        private static Fila<Vertice> construirCaminho(HashMap<Vertice, Vertice> anteriores, Vertice origem, Vertice destino) {
+            Pilha pilha = new Pilha();
             Vertice atual = destino;
 
             while (atual != null) {
@@ -61,7 +63,7 @@ public class Dijkstra {
                 atual = anteriores.get(atual);
             }
 
-            FilaEncadeada<Vertice> caminho = new FilaEncadeada<>();
+            Fila<Vertice> caminho = new Fila<>();
             while (!pilha.estaVazia()) {
                 caminho.enfileirar(pilha.desempilhar());
             }

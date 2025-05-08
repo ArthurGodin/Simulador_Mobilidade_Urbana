@@ -1,9 +1,10 @@
 package cidade;
 
-import estruturas.Lista;
+import estruturas.*;
 
 public class Grafo {
-    private Lista<Vertice> vertices = new Lista<>();
+
+    public Lista<Vertice> vertices = new Lista<>();
     private Lista<Aresta> arestas = new Lista<>();
 
     public void adicionarVertice(Vertice v) {
@@ -28,6 +29,14 @@ public class Grafo {
     }
 
     public Aresta buscarAresta(Vertice origem, Vertice destino) {
+        for (int i = 0; i < arestas.tamanho(); i++) {
+            Aresta a = arestas.obter(i);
+            if (a.getOrigem() == origem && a.getDestino() == destino) return a;
+        }
+        return null;
+    }
+
+    public Aresta obterArestas(Vertice origem , Vertice destino) {
         for (int i = 0; i < arestas.tamanho(); i++) {
             Aresta a = arestas.obter(i);
             if (a.getOrigem() == origem && a.getDestino() == destino) return a;
