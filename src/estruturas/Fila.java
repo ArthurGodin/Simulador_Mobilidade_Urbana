@@ -47,4 +47,27 @@ public class Fila<T> {
     public int tamanho() {
         return tamanho;
     }
+
+    // Implementação de Iterable<T>
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private No<T> atual = primeiro;
+
+            @Override
+            public boolean hasNext() {
+                return atual != null;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new java.util.NoSuchElementException();
+                }
+                T dado = atual.dado;
+                atual = atual.proximo;
+                return dado;
+            }
+        };
+    }
 }
