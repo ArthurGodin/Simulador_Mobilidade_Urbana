@@ -1,9 +1,9 @@
 package semaforo;
 import heuristica.*;
-
+import estruturas.*;
 import cidade.Intersecao;
 import heuristica.*;
-import java.util.List;
+
 
 public class ControladorSemaforos {
     private HeuristicaControle heuristica;
@@ -12,7 +12,7 @@ public class ControladorSemaforos {
         this.heuristica = heuristica;
     }
 
-    public void controlarSemaforos(List<Intersecao> intersecoes, int tempoAtual) {
+    public void controlarSemaforos(Lista<Intersecao> intersecoes, int tempoAtual) {
         for (Intersecao intersecao : intersecoes) {
             heuristica.atualizarSemaforo(intersecao.getSemaforo(), tempoAtual);
         }

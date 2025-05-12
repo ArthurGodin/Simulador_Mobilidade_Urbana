@@ -25,7 +25,7 @@ public class Dijkstra {
                 if (atual == null) break;
                 visitados.add(atual);
 
-                Lista<Aresta> adjacentes = grafo.obterArestas();
+                Lista<Aresta> adjacentes = grafo.obterArestas(atual);
                 for (int i = 0; i < adjacentes.tamanho(); i++) {
                     Aresta aresta = adjacentes.obter(i);
                     Vertice vizinho = aresta.getDestino();

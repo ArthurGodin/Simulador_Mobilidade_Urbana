@@ -8,35 +8,26 @@ import semaforo.Semaforo;
 public class Veiculo {
     private Intersecao origem;
     private Intersecao destino;
-    private Lista<Rua> caminho;
-    private int posicaoAtual; // Índice da rua atual no caminho
-    private boolean chegouAoDestino;
+    private Lista<Intersecao> caminho;
+    private int posicaoAtual;
 
-    public Veiculo(Intersecao origem, Intersecao destino) {
+    public Veiculo(Intersecao origem, Intersecao destino, Lista<Intersecao> caminho) {
         this.origem = origem;
         this.destino = destino;
         this.caminho = caminho;
         this.posicaoAtual = 0;
-        this.chegouAoDestino = false;
     }
 
     public void mover() {
-        if (chegouAoDestino) return;
-
-        Rua ruaAtual = caminho.obter(posicaoAtual);
-        Intersecao proximaIntersecao = ruaAtual.getDestino();
-        Semaforo semaforo = proximaIntersecao.getSemaforo();
-
-        if (semaforo.getEstadoAtual().equals("VERDE")) {
+        if (caminho != null && posicaoAtual < caminho.tamanho() - 1) {
             posicaoAtual++;
-            if (posicaoAtual >= caminho.tamanho()) {
-                chegouAoDestino = true;
-            }
+            System.out.println("veículo se movendo para a posição:" + posicaoAtual);
         }
     }
 
     public boolean chegouAoDestino() {
-        return chegouAoDestino;
+        return posicaoAtual == caminho.tamanho() - 1;
     }
 }
+
 

@@ -36,11 +36,66 @@ public class Grafo {
         return null;
     }
 
-    public Aresta obterArestas(Vertice origem , Vertice destino) {
+    public Lista<Aresta> obterArestas(Vertice origem) {
+        Lista<Aresta> arestasDeOrigem = new Lista<>();
         for (int i = 0; i < arestas.tamanho(); i++) {
             Aresta a = arestas.obter(i);
-            if (a.getOrigem() == origem && a.getDestino() == destino) return a;
+            if (a.getOrigem() == origem) {
+                arestasDeOrigem.adicionar(a);
+            }
+        }
+        return arestasDeOrigem;
+    }
+
+    public Lista<Intersecao> converterParaIntersecoes() {
+        Lista<Intersecao> intersecoes = new Lista<>();
+        Lista<Long> ids = new Lista<>();
+
+        // Criar interseções a partir dos vértices
+        for (int i = 0; i < vertices.tamanho(); i++) {
+            Vertice v = vertices.obter(i);
+            Intersecao intersecao = new Intersecao(String.valueOf(v.getId()));
+            intersecoes.adicionar(intersecao);
+            ids.adicionar(v.getId());
+        }
+
+        // Associar ruas às interseções
+        for (int i = 0; i < arestas.tamanho(); i++) {
+            Aresta a = arestas.obter(i);
+            Vertice origem = a.getOrigem();
+            Vertice destino = a.getDestino();
+
+            Intersecao interOrigem = encontrarIntersecao(intersecoes, ids, origem.getId());
+            Intersecao interDestino = encontrarIntersecao(intersecoes, ids, destino.getId());
+
+            if (interOrigem != null && interDestino != null) {
+                double distancia = calcularDistancia(origem, destino);
+                Rua rua = new Rua("Rua " + interOrigem.getId() + "->" + interDestino.getId(), interOrigem, interDestino, 5, 10);
+
+                interOrigem.adicionarRuaSaida(rua);
+                interDestino.adicionarRuaEntrada(rua);
+            }
+        }
+
+        return intersecoes;
+    }
+
+    private Intersecao encontrarIntersecao(Lista<Intersecao> intersecoes, Lista<Long> ids, long id) {
+        for (int i = 0; i < ids.tamanho(); i++) {
+            if (ids.obter(i) == id) {
+                return intersecoes.obter(i);
+            }
         }
         return null;
+    }
+
+    private double calcularDistancia(Vertice v1, Vertice v2) {
+        double lat1 = v1.getLat();
+        double lon1 = v1.getLon();
+        double lat2 = v2.getLat();
+        double lon2 = v2.getLon();
+        double dx = lat2 - lat1;
+        double dy = lon2 - lon1;
+        return Math.sqrt(dx * dx + dy * dy) * 111000; // conversão simplificada para metros
     }
 }

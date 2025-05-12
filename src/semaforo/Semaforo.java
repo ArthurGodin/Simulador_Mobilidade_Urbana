@@ -17,6 +17,7 @@ public class Semaforo {
         this.estadoAtual = "VERDE";
     }
 
+
     public void atualizar() {
         tempoAtual++;
         switch (estadoAtual) {
@@ -50,5 +51,10 @@ public class Semaforo {
         this.tempoAmarelo = amarelo;
         this.tempoVermelho = vermelho;
     }
+
+    public void setEstado(String estado) {
+        this.estadoAtual = estado;
+    }
+
 }
 

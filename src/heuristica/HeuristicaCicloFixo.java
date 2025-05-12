@@ -1,7 +1,6 @@
 package heuristica;
 
 import cidade.Intersecao;
-import heuristica.*;
 import semaforo.*;
 
 public class HeuristicaCicloFixo implements HeuristicaControle {
@@ -16,17 +15,33 @@ public class HeuristicaCicloFixo implements HeuristicaControle {
     }
 
     @Override
+    public void atualizarSemaforo(Semaforo semaforo, int tempoAtual) {
+        int cicloTotal = duracaoVerde + duracaoAmarelo + duracaoVermelho;
+        int tempoNoCiclo = tempoAtual % cicloTotal;
+
+        if (tempoNoCiclo < duracaoVerde) {
+            semaforo.setEstado("VERDE");
+        } else if (tempoNoCiclo < duracaoVerde + duracaoAmarelo) {
+            semaforo.setEstado("AMARELO");
+        } else {
+            semaforo.setEstado("VERMELHO");
+        }
+    }
+
+
+    @Override
     public void ajustarSemaforo(Intersecao intersecao, int tempoAtual) {
         Semaforo semaforo = intersecao.getSemaforo();
         int cicloTotal = duracaoVerde + duracaoAmarelo + duracaoVermelho;
         int tempoNoCiclo = tempoAtual % cicloTotal;
 
         if (tempoNoCiclo < duracaoVerde) {
-            semaforo.setEstado(Semaforo.Estado.VERDE);
+            semaforo.setEstado("VERDE");
         } else if (tempoNoCiclo < duracaoVerde + duracaoAmarelo) {
-            semaforo.setEstado(Semaforo.Estado.AMARELO);
+            semaforo.setEstado("AMARELO");
         } else {
-            semaforo.setEstado(Semaforo.Estado.VERMELHO);
+            semaforo.setEstado("VERMELHO");
         }
+
     }
 }

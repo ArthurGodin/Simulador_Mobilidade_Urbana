@@ -1,47 +1,40 @@
-
 import cidade.*;
 import estruturas.*;
 import heuristica.*;
-import semaforo.*;
-import trafego.*;
+import json.*;
 
 public class Main {
+
     public static void main(String[] args) {
-        // Criar interseções
-        Intersecao intersecaoA = new Intersecao("A");
-        Intersecao intersecaoB = new Intersecao("B");
-        Intersecao intersecaoC = new Intersecao("C");
+        try {
+            // Carregar o grafo a partir do arquivo JSON
+            Grafo grafo = LeitorOSMJson.carregar("json/Morada_do_Sol.json");
 
-        // Criar ruas
-        Rua ruaAB = new Rua("Rua AB", intersecaoA, intersecaoB, 500, 10);
-        Rua ruaBC = new Rua("Rua BC", intersecaoB, intersecaoC, 300, 8);
-        Rua ruaCA = new Rua("Rua CA", intersecaoC, intersecaoA, 400, 9);
+            // Converter o grafo em Lista<Intersecao> (estrutura customizada)
+            Lista<Intersecao> intersecoes = new Lista<>(); // Inicializa a lista corretamente
+            for (int i = 0; i < grafo.vertices.tamanho(); i++) {
+                Vertice vertice = grafo.vertices.obter(i);
+                Intersecao intersecao = new Intersecao(vertice.toString());
+                intersecao.setVertice(vertice); // Atribui o vértice à interseção
+                intersecoes.adicionar(intersecao);
+            }
 
-        // Adicionar ruas às interseções
-        intersecaoA.adicionarRuaSaida(ruaAB);
-        intersecaoB.adicionarRuaEntrada(ruaAB);
 
-        intersecaoB.adicionarRuaSaida(ruaBC);
-        intersecaoC.adicionarRuaEntrada(ruaBC);
 
-        intersecaoC.adicionarRuaSaida(ruaCA);
-        intersecaoA.adicionarRuaEntrada(ruaCA);
+            // Inicializar a heurística desejada
+            HeuristicaControle heuristica = new HeuristicaCicloFixo(10, 5, 10);
 
-        // Criar lista de interseções (usando estrutura própria)
-        Lista<Intersecao> intersecoes = new Lista<>();
-        intersecoes.adicionar(intersecaoA);
-        intersecoes.adicionar(intersecaoB);
-        intersecoes.adicionar(intersecaoC);
+            // Criar o simulador com interseções, heurística e duração
+            Simulador simulador = new Simulador(intersecoes, heuristica, 10, grafo);
 
-        // Definir heurística
-        HeuristicaControle heuristica = new controle.HeuristicaCicloFixo(10, 5, 10);
 
-        // Criar simulador
-        Simulador simulador = new Simulador(intersecoes, heuristica, 100);
-
-        // Executar simulação
-        simulador.executar();
+            // Executar a simulação
+            System.out.println("Iniciando simulação...");
+            simulador.executar();
+            System.out.println("Simulação concluída!");
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar ou executar a simulação: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
-
-

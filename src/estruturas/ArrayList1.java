@@ -1,6 +1,8 @@
 package estruturas;
 
-public class ArrayList1<T> {
+import java.util.Iterator;
+
+public class ArrayList1<T> extends Lista<T> implements Iterable<T> {
     private T[] elementos;
     private int tamanho;
 
@@ -27,7 +29,7 @@ public class ArrayList1<T> {
     // Retorna o elemento na posição especificada
     public T obter(int indice) {
         verificarIndice(indice);
-        return elementos[indice];
+        return elementos[indice]; // O tipo aqui é T, que será Intersecao no seu caso
     }
 
     // Define (substitui) o elemento na posição especificada
@@ -83,5 +85,22 @@ public class ArrayList1<T> {
             throw new IndexOutOfBoundsException("Índice inválido: " + indice);
         }
     }
-}
 
+    // Implementação do método iterator para a interface Iterable
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private int indice = 0;
+
+            @Override
+            public boolean hasNext() {
+                return indice < tamanho;
+            }
+
+            @Override
+            public T next() {
+                return elementos[indice++];
+            }
+        };
+    }
+}

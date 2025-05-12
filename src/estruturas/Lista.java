@@ -1,6 +1,10 @@
 package estruturas;
 
-public class Lista<T> {
+import java.util.Iterator;
+
+
+
+public class Lista<T> implements Iterable<T>{
     private No<T> inicio;
     private int tamanho;
 
@@ -51,4 +55,25 @@ public class Lista<T> {
     public boolean estaVazia() {
         return tamanho == 0;
     }
+
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private No<T> atual = inicio;
+
+            @Override
+            public boolean hasNext() {
+                return atual != null;
+            }
+
+            @Override
+            public T next() {
+                T dado = atual.dado;
+                atual = atual.proximo;
+                return dado;
+            }
+        };
+    }
 }
+

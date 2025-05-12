@@ -1,9 +1,8 @@
 package heuristica;
 
 import cidade.Intersecao;
-import heuristica.HeuristicaControle;
 import semaforo.*;
-import estruturas.*;
+
 
 public class HeuristicaConsumo implements HeuristicaControle {
     @Override

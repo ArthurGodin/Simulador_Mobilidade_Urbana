@@ -1,6 +1,8 @@
 package estruturas;
 
-public class Fila<T> {
+import java.util.Iterator;
+
+public class Fila<T> implements Iterable<T> {
     private static class No<T> {
         T dado;
         No<T> proximo;

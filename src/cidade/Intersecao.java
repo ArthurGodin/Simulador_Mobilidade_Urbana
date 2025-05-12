@@ -6,6 +6,7 @@ import semaforo.*;
 
 public class Intersecao {
     private final String id;
+    private Vertice vertice = null;
     private final Lista<Rua> ruasSaida;
     private final Lista<Rua> ruasEntrada;
     private Semaforo semaforo;
@@ -13,9 +14,11 @@ public class Intersecao {
 
     public Intersecao(String id) {
         this.id = id;
+        this.vertice = vertice;
         this.ruasSaida = new Lista<>();
         this.ruasEntrada = new Lista<>();
         this.filaVeiculos = new Fila<>();
+        this.semaforo = new Semaforo(10, 5 , 10);
     }
 
     public String getId() {
@@ -23,11 +26,11 @@ public class Intersecao {
     }
 
     public void adicionarRuaSaida(Rua rua) {
-        ruasSaida.obter(rua);
+        ruasSaida.adicionar(rua);
     }
 
     public void adicionarRuaEntrada(Rua rua) {
-        ruasEntrada.obter(rua);
+        ruasEntrada.adicionar(rua);
     }
 
     public Lista<Rua> getRuasSaida() {
@@ -50,8 +53,18 @@ public class Intersecao {
         return filaVeiculos;
     }
 
+    public Vertice getVertice(){
+        return vertice;
+    }
+
+
+
     @Override
     public String toString() {
         return "Intersecao " + id;
+    }
+
+    public void setVertice(Vertice vertice) {
+        this.vertice = vertice;
     }
 }
