@@ -1,17 +1,17 @@
 package estruturas;
 
-public class ArrayList<T> {
+public class ArrayList1<T> {
     private T[] elementos;
     private int tamanho;
 
     // Construtor com capacidade inicial padrão
-    public ArrayList() {
+    public ArrayList1() {
         this(10); // capacidade inicial padrão
     }
 
     // Construtor com capacidade personalizada
     @SuppressWarnings("unchecked")
-    public ArrayList(int capacidadeInicial) {
+    public ArrayList1(int capacidadeInicial) {
         elementos = (T[]) new Object[capacidadeInicial];
         tamanho = 0;
     }
