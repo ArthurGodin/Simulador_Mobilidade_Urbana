@@ -55,7 +55,6 @@ public class Grafo {
         for (int i = 0; i < vertices.tamanho(); i++) {
             Vertice v = vertices.obter(i);
             Intersecao intersecao = new Intersecao(String.valueOf(v.getId()));
-            intersecao.setVertice(v);  // Garantir que a interseção tem o vértice associado
             intersecoes.adicionar(intersecao);
             ids.adicionar(v.getId());
         }

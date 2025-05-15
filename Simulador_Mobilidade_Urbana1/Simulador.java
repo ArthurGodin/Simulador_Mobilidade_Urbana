@@ -24,6 +24,25 @@ public class Simulador {
         this.geradorVeiculos = new GeradorVeiculos(converterLista(intersecoes), grafo);
     }
 
+
+    private void inicializarSemaforos() {
+        for (int i = 0; i < intersecoes.tamanho(); i++) {
+            Intersecao intersecao = intersecoes.obter(i);
+            if (intersecao.getSemaforo() == null) {
+                intersecao.setSemaforo(new Semaforo(10, 5, 1));
+            }
+        }
+    }
+
+    // Corrigido para retornar lista com tipo correto
+    private ArrayList1<Intersecao> converterLista(Lista<Intersecao> listaCustom) {
+        ArrayList1<Intersecao> listaJava = new ArrayList1<>();
+        for (int i = 0; i < listaCustom.tamanho(); i++) {
+            listaJava.adicionar(listaCustom.obter(i));
+        }
+        return listaJava;
+    }
+
     public void executar() {
         ColetorEstatisticas coletorEstatisticas = new ColetorEstatisticas();
 
@@ -46,11 +65,21 @@ public class Simulador {
         coletorEstatisticas.exibirEstatisticas();
     }
 
-    private ArrayList1<Intersecao> converterLista(Lista<Intersecao> listaCustom) {
-        ArrayList1<Intersecao> listaJava = new ArrayList1<>();
-        for (int i = 0; i < listaCustom.tamanho(); i++) {
-            listaJava.adicionar(listaCustom.obter(i));
+    // Corrigido para retornar lista de Veiculo tipada corretamente
+    private ArrayList1<Veiculo> converterFilaParaLista(Fila<Veiculo> fila) {
+        ArrayList1<Veiculo> lista = new ArrayList1<>();
+        Fila<Veiculo> auxiliar = new Fila<>();
+
+        while (!fila.estaVazia()) {
+            Veiculo v = fila.desenfileirar();
+            lista.adicionar(v);
+            auxiliar.enfileirar(v);
         }
-        return listaJava;
+
+        while (!auxiliar.estaVazia()) {
+            fila.enfileirar(auxiliar.desenfileirar());
+        }
+
+        return lista;
     }
 }

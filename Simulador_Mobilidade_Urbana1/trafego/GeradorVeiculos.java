@@ -30,20 +30,13 @@ public class GeradorVeiculos {
 
         // Usar Dijkstra para obter o caminho
         Fila<Vertice> caminhoVertices = Dijkstra.encontrarMenorCaminho(grafo, origem.getVertice(), destino.getVertice());
-
-        // Adicionando logs para verificação
-        System.out.println("Gerando veículo de " + origem + " para " + destino);
-        if (caminhoVertices.estaVazia()) {
-            System.out.println("Nenhum caminho encontrado entre " + origem + " e " + destino);
-        } else {
-            System.out.println("Caminho gerado: " + caminhoVertices);
-        }
+        System.out.println("Caminho de " + origem + " até " + destino + ": " + caminhoVertices.tamanho());
 
         // Converter caminho para Lista<Intersecao>
         Lista<Intersecao> caminhoIntersecoes = new Lista<>();
         while (!caminhoVertices.estaVazia()) {
             Vertice v = caminhoVertices.desenfileirar();
-            caminhoIntersecoes.adicionar(v.getIntersecao());
+            caminhoIntersecoes.adicionar(v.getIntersecao()); // ← garanta que existe esse método!
         }
 
         // Criar o veículo com caminho real
@@ -51,7 +44,6 @@ public class GeradorVeiculos {
         veiculos.enfileirar(veiculo);
         origem.getFilaVeiculos().enfileirar(veiculo);
     }
-
 
     public Fila<Veiculo> getVeiculos() {
         return veiculos;

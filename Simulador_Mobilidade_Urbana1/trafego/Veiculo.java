@@ -19,12 +19,9 @@ public class Veiculo {
     }
 
     public void mover() {
-        if (caminho != null && posicaoAtual < caminho.tamanho()) {
+        if (caminho != null && posicaoAtual < caminho.tamanho() - 1) {
             posicaoAtual++;
-            System.out.println("Veículo se movendo para a posição: " + posicaoAtual + " de " + caminho.obter(posicaoAtual - 1));
-        }
-        else {
-            System.out.println("Veículo chegou ao destino " + caminho.obter(caminho.tamanho() - 1));
+            System.out.println("veículo se movendo para a posição:" + posicaoAtual);
         }
     }
 
@@ -32,4 +29,5 @@ public class Veiculo {
         return posicaoAtual == caminho.tamanho() - 1;
     }
 }
+
 

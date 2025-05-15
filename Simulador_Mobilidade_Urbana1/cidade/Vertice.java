@@ -30,8 +30,4 @@ public class Vertice {
     public Intersecao getIntersecao(){
         return new Intersecao(this.toString());
     }
-
-    public String toString(){
-        return "vertice( id = " + id + ", lat = " + lat + ", lon = " + lon + ")";
-    }
 }

@@ -8,6 +8,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="json-20210307" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../openjfx-24.0.1_windows-x64_bin-sdk/javafx-sdk-24.0.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/../openjfx-24.0.1_windows-x64_bin-sdk/javafx-sdk-24.0.1/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">
