@@ -14,7 +14,6 @@ public class Intersecao {
 
     public Intersecao(String id) {
         this.id = id;
-        this.vertice = vertice;
         this.ruasSaida = new Lista<>();
         this.ruasEntrada = new Lista<>();
         this.filaVeiculos = new Fila<>();

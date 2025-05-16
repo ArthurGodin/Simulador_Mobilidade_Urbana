@@ -51,16 +51,17 @@ public class Grafo {
         Lista<Intersecao> intersecoes = new Lista<>();
         Lista<Long> ids = new Lista<>();
 
-        // Criar interseções a partir dos vértices
+        // Criar interseções a partir dos vértices e associá-las aos vértices
         for (int i = 0; i < vertices.tamanho(); i++) {
             Vertice v = vertices.obter(i);
             Intersecao intersecao = new Intersecao(String.valueOf(v.getId()));
-            intersecao.setVertice(v);  // Garantir que a interseção tem o vértice associado
+            intersecao.setVertice(v);
             intersecoes.adicionar(intersecao);
             ids.adicionar(v.getId());
+            v.setIntersecao(intersecao);  // **Essa linha é ESSENCIAL para associar a interseção ao vértice**
         }
 
-        // Associar ruas às interseções
+        // Associar ruas às interseções (mantém igual)
         for (int i = 0; i < arestas.tamanho(); i++) {
             Aresta a = arestas.obter(i);
             Vertice origem = a.getOrigem();
@@ -80,6 +81,7 @@ public class Grafo {
 
         return intersecoes;
     }
+
 
     private Intersecao encontrarIntersecao(Lista<Intersecao> intersecoes, Lista<Long> ids, long id) {
         for (int i = 0; i < ids.tamanho(); i++) {

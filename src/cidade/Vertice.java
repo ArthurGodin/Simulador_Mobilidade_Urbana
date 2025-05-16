@@ -28,7 +28,7 @@ public class Vertice {
     }
 
     public Intersecao getIntersecao(){
-        return new Intersecao(this.toString());
+        return intersecao;
     }
 
     public String toString(){

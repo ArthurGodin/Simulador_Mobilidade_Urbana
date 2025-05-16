@@ -26,20 +26,6 @@ public class Main {
             Lista<Intersecao> intersecoes = grafo.converterParaIntersecoes();
             System.out.println("Total de interseções criadas: " + intersecoes.tamanho());
 
-
-            for (int i = 0; i < grafo.vertices.tamanho(); i++) {
-                Vertice v = grafo.vertices.obter(i);
-                if (v.getIntersecao() == null) {
-                    Intersecao intersecao = new Intersecao(String.valueOf(v.getId()));
-                    intersecao.setVertice(v);
-                    intersecoes.adicionar(intersecao);
-                    v.setIntersecao(intersecao);
-                }
-            }
-
-            // Imprime quantidade de interseções para garantir que não está vazia
-            System.out.println("Total de interseções criadas: " + intersecoes.tamanho());
-            // Exibe alguns exemplos das interseções para conferir
             int maxPrint = Math.min(5, intersecoes.tamanho());
             for (int i = 0; i < maxPrint; i++) {
                 Intersecao inter = intersecoes.obter(i);
@@ -59,7 +45,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 
     public static void main(String[] args) {
         iniciarSimulador(args);
