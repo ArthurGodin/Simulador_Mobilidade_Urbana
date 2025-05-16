@@ -8,10 +8,8 @@ public class GeradorVeiculos {
     private Lista<Intersecao> intersecoes;
     private Fila<Veiculo> veiculos;
     private Random random;
+    private Grafo grafo;
 
-    private Grafo grafo; // novo campo
-
-    // Corrigido o construtor para aceitar o grafo
     public GeradorVeiculos(Lista<Intersecao> intersecoes, Grafo grafo) {
         this.grafo = grafo;
         this.intersecoes = intersecoes;
@@ -20,7 +18,6 @@ public class GeradorVeiculos {
         System.out.println("GeradorVeiculos inicializado com grafo: " + (grafo != null));
     }
 
-
     public void gerarVeiculo() {
         Intersecao origem = intersecoes.obter(random.nextInt(intersecoes.tamanho()));
         Intersecao destino = intersecoes.obter(random.nextInt(intersecoes.tamanho()));
@@ -28,32 +25,46 @@ public class GeradorVeiculos {
             destino = intersecoes.obter(random.nextInt(intersecoes.tamanho()));
         }
 
-        // Usar Dijkstra para obter o caminho
         Fila<Vertice> caminhoVertices = Dijkstra.encontrarMenorCaminho(grafo, origem.getVertice(), destino.getVertice());
 
-        // Adicionando logs para verificação
         System.out.println("Gerando veículo de " + origem + " para " + destino);
-        if (caminhoVertices.estaVazia()) {
-            System.out.println("Nenhum caminho encontrado entre " + origem + " e " + destino);
-        } else {
-            System.out.println("Caminho gerado: " + caminhoVertices);
+
+        if (intersecoes == null || intersecoes.tamanho() < 2) {
+            System.out.println("Interseções insuficientes para gerar veículos. Tamanho: " + (intersecoes == null ? "null" : intersecoes.tamanho()));
+            return;
         }
 
-        // Converter caminho para Lista<Intersecao>
+        if (caminhoVertices == null || caminhoVertices.estaVazia()) {
+            System.out.println("Nenhum caminho encontrado entre " + origem + " e " + destino);
+            return;
+        }
+
         Lista<Intersecao> caminhoIntersecoes = new Lista<>();
         while (!caminhoVertices.estaVazia()) {
             Vertice v = caminhoVertices.desenfileirar();
-            caminhoIntersecoes.adicionar(v.getIntersecao());
+            System.out.println("Checando vértice: " + v + ", Intersecao associada? " + (v.getIntersecao() != null));
+            if (v.getIntersecao() != null) {
+                caminhoIntersecoes.adicionar(v.getIntersecao());
+            } else {
+                System.err.println("Erro: vértice sem intersecao associada: " + v);
+            }
         }
 
-        // Criar o veículo com caminho real
+        if (caminhoIntersecoes.tamanho() == 0) {
+            System.out.println("Caminho não possui interseções válidas. Veículo não criado.");
+            return;
+        }
+
         Veiculo veiculo = new Veiculo(origem, destino, caminhoIntersecoes);
         veiculos.enfileirar(veiculo);
         origem.getFilaVeiculos().enfileirar(veiculo);
     }
 
-
     public Fila<Veiculo> getVeiculos() {
         return veiculos;
+    }
+
+    public Lista<Intersecao> getIntersecoes() {
+        return intersecoes;
     }
 }

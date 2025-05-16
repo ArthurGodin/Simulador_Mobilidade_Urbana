@@ -31,5 +31,12 @@ public class Veiculo {
     public boolean chegouAoDestino() {
         return posicaoAtual == caminho.tamanho() - 1;
     }
+
+
+    public Lista<Intersecao> getCaminho() {
+        return caminho;
+    }
+
+
 }
 

@@ -1,56 +1,74 @@
-import cidade.*;
 import semaforo.*;
-import heuristica.HeuristicaControle;
+import cidade.*;
 import estruturas.*;
-import trafego.*;
+import heuristica.HeuristicaControle;
+import trafego.GeradorVeiculos;
+import trafego.Veiculo;
 
 public class Simulador {
+    private final int duracaoSimulacao;
     private Lista<Intersecao> intersecoes;
     private ControladorSemaforos controladorSemaforos;
     private GeradorVeiculos geradorVeiculos;
-    private int tempoAtual;
-    private int duracaoSimulacao;
     private HeuristicaControle heuristica;
-
-    private Grafo grafo; // adicione esse campo
+    private Grafo grafo;
 
     public Simulador(Lista<Intersecao> intersecoes, HeuristicaControle heuristica, int duracaoSimulacao, Grafo grafo) {
         this.intersecoes = intersecoes;
         this.heuristica = heuristica;
-        this.duracaoSimulacao = duracaoSimulacao;
-        this.tempoAtual = 0;
-        this.controladorSemaforos = new ControladorSemaforos(heuristica);
         this.grafo = grafo;
-        this.geradorVeiculos = new GeradorVeiculos(converterLista(intersecoes), grafo);
+        this.controladorSemaforos = new ControladorSemaforos(heuristica);
+        this.geradorVeiculos = new GeradorVeiculos(intersecoes, grafo);
+        this.duracaoSimulacao = duracaoSimulacao;
     }
 
-    public void executar() {
-        ColetorEstatisticas coletorEstatisticas = new ColetorEstatisticas();
+    // Novo método para executar a simulação passo a passo no tempo atual
+    public void executarPasso(int tempoAtual) {
+        // Controlar semáforos no tempoAtual
+        controladorSemaforos.controlarSemaforos(converterLista(intersecoes), tempoAtual);
 
-        while (tempoAtual < duracaoSimulacao) {
-            controladorSemaforos.controlarSemaforos(converterLista(intersecoes), tempoAtual);
-            geradorVeiculos.gerarVeiculo();
+        // Gerar veículos — pode ajustar para gerar com frequência desejada
+        geradorVeiculos.gerarVeiculo();
 
-            for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
-                if (!veiculo.chegouAoDestino()) {
-                    veiculo.mover();
-                    if (veiculo.chegouAoDestino()) {
-                        coletorEstatisticas.registrarVeiculoFinalizado(veiculo);
-                    }
-                }
+        // Mover veículos que ainda não chegaram ao destino
+        for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
+            if (!veiculo.chegouAoDestino()) {
+                veiculo.mover();
             }
-
-            tempoAtual++;
         }
-
-        coletorEstatisticas.exibirEstatisticas();
     }
 
+    // Método original, que chama executarPasso para todos os tempos
+    public void executar() {
+        for (int tempoAtual = 0; tempoAtual < duracaoSimulacao; tempoAtual++) {
+            executarPasso(tempoAtual);
+        }
+    }
+
+    // Método auxiliar para converter sua lista customizada para ArrayList1 (se necessário)
     private ArrayList1<Intersecao> converterLista(Lista<Intersecao> listaCustom) {
         ArrayList1<Intersecao> listaJava = new ArrayList1<>();
         for (int i = 0; i < listaCustom.tamanho(); i++) {
             listaJava.adicionar(listaCustom.obter(i));
         }
         return listaJava;
+    }
+
+    // Getters importantes para o visual acessar:
+
+    public Lista<Intersecao> getIntersecoes() {
+        return intersecoes;
+    }
+
+    public Grafo getGrafo() {
+        return grafo;
+    }
+
+    public GeradorVeiculos getGeradorVeiculos() {
+        return geradorVeiculos;
+    }
+
+    public int getDuracaoSimulacao(){
+        return duracaoSimulacao;
     }
 }

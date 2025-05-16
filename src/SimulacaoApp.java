@@ -53,21 +53,26 @@ public class SimulacaoApp extends Application {
         try {
             int duracao = Integer.parseInt(duracaoField.getText());
             statusLabel.setText("Status: Simulação em andamento...");
+            progressoSimulacao.setProgress(0);
 
-            // Criar o grafo e as interseções a partir do arquivo JSON
+            // Criar grafo e interseções do JSON
             Grafo grafo = LeitorOSMJson.carregar("json/Morada_do_Sol.json");
             Lista<Intersecao> intersecoes = grafo.converterParaIntersecoes();
+
+            // Configurar heurística (pode trocar para outra se quiser)
             HeuristicaControle heuristica = new HeuristicaCicloFixo(10, 5, 10);
 
             simulador = new Simulador(intersecoes, heuristica, duracao, grafo);
 
-            // Rodar a simulação em um novo thread
+            // Rodar a simulação em uma thread separada para não travar a UI
             new Thread(() -> {
-                simulador.executar();
-                Platform.runLater(() -> {
-                    statusLabel.setText("Status: Simulação Finalizada!");
-                    progressoSimulacao.setProgress(1); // 100% ao finalizar
-                });
+                for (int t = 0; t < duracao; t++) {
+                    simulador.executarPasso(t); // Modifique Simulador para ter um método que executa um passo
+                    final double progresso = (t + 1) / (double) duracao;
+                    Platform.runLater(() -> progressoSimulacao.setProgress(progresso));
+                }
+
+                Platform.runLater(() -> statusLabel.setText("Status: Simulação Finalizada!"));
             }).start();
 
         } catch (NumberFormatException e) {
