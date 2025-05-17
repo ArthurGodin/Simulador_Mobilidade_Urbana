@@ -1,6 +1,6 @@
 package semaforo;
 import trafego.*;
-import estruturas.*;
+
 
 public class Semaforo {
     private int tempoVerde;
@@ -8,6 +8,7 @@ public class Semaforo {
     private int tempoVermelho;
     private int tempoAtual;
     private String estadoAtual; // "VERDE", "AMARELO", "VERMELHO"
+    private RastreadorDeMovimentacao rastreador; // Campo para rastrear as movimentações
 
     public Semaforo(int tempoVerde, int tempoAmarelo, int tempoVermelho) {
         this.tempoVerde = tempoVerde;
@@ -15,8 +16,8 @@ public class Semaforo {
         this.tempoVermelho = tempoVermelho;
         this.tempoAtual = 0;
         this.estadoAtual = "VERDE";
+        this.rastreador = new RastreadorDeMovimentacao(); // Inicializa o rastreador
     }
-
 
     public void atualizar() {
         tempoAtual++;
@@ -56,5 +57,12 @@ public class Semaforo {
         this.estadoAtual = estado;
     }
 
-}
+    // Métodos para acessar e configurar o rastreador de movimentações
+    public RastreadorDeMovimentacao getRastreador() {
+        return rastreador;
+    }
 
+    public void setRastreador(RastreadorDeMovimentacao rastreador) {
+        this.rastreador = rastreador;
+    }
+}

@@ -55,10 +55,13 @@ public class GeradorVeiculos {
             return;
         }
 
-        Veiculo veiculo = new Veiculo(origem, destino, caminhoIntersecoes);
+        // Gerar um ID único para o veículo
+        int idVeiculo = random.nextInt(1000); // Exemplo de geração de ID aleatório
+        Veiculo veiculo = new Veiculo(idVeiculo, origem, destino, caminhoIntersecoes);  // Passando o ID
         veiculos.enfileirar(veiculo);
         origem.getFilaVeiculos().enfileirar(veiculo);
     }
+
 
     public Fila<Veiculo> getVeiculos() {
         return veiculos;

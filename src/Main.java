@@ -9,7 +9,7 @@ public class Main {
 
     public static void iniciarSimulador(String[] args) {
         try {
-            int duracaoSimulacao = 20;
+            int duracaoSimulacao = 10;
             if (args.length > 0) {
                 try {
                     duracaoSimulacao = Integer.parseInt(args[0]);
@@ -33,7 +33,8 @@ public class Main {
             }
 
             System.out.println("Configurando heurística adaptativa profissional...");
-            HeuristicaControle heuristica = new HeuristicaAdaptativa(20, 5, 15, 3);
+            HeuristicaControle heuristica = new HeuristicaCicloFixo(5, 2, 5); // verde 5, amarelo 2, vermelho 5
+
 
             System.out.println("Criando simulador com duração de " + duracaoSimulacao + " unidades de tempo.");
             simuladorGlobal = new Simulador(intersecoes, heuristica, duracaoSimulacao, grafo);
@@ -48,5 +49,12 @@ public class Main {
 
     public static void main(String[] args) {
         iniciarSimulador(args);
+
+        if (simuladorGlobal != null) {
+            for (int tempoAtual = 0; tempoAtual < simuladorGlobal.getDuracaoSimulacao(); tempoAtual++) {
+                simuladorGlobal.executarPasso(tempoAtual);
+                // NÃO CHAMAR O ConsoleMonitor.imprimirEstado AQUI, pois já é chamado dentro do executarPasso
+            }
+        }
     }
 }

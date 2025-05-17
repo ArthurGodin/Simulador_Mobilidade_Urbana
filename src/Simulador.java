@@ -3,7 +3,9 @@ import cidade.*;
 import estruturas.*;
 import heuristica.HeuristicaControle;
 import trafego.GeradorVeiculos;
+import trafego.RastreadorDeMovimentacao;
 import trafego.Veiculo;
+
 
 public class Simulador {
     private final int duracaoSimulacao;
@@ -12,6 +14,8 @@ public class Simulador {
     private GeradorVeiculos geradorVeiculos;
     private HeuristicaControle heuristica;
     private Grafo grafo;
+    private ColetorEstatisticas coletor;
+    private RastreadorDeMovimentacao rastreadorDeMovimentacao; // Instância do rastreador de movimentação
 
     public Simulador(Lista<Intersecao> intersecoes, HeuristicaControle heuristica, int duracaoSimulacao, Grafo grafo) {
         this.intersecoes = intersecoes;
@@ -20,22 +24,41 @@ public class Simulador {
         this.controladorSemaforos = new ControladorSemaforos(heuristica);
         this.geradorVeiculos = new GeradorVeiculos(intersecoes, grafo);
         this.duracaoSimulacao = duracaoSimulacao;
+        this.coletor = new ColetorEstatisticas();
+        this.rastreadorDeMovimentacao = new RastreadorDeMovimentacao(); // Inicializando o rastreador
     }
 
     // Novo método para executar a simulação passo a passo no tempo atual
     public void executarPasso(int tempoAtual) {
-        // Controlar semáforos no tempoAtual
+        // Controla os semáforos
         controladorSemaforos.controlarSemaforos(converterLista(intersecoes), tempoAtual);
 
-        // Gerar veículos — pode ajustar para gerar com frequência desejada
+        // Gera novos veículos
         geradorVeiculos.gerarVeiculo();
 
-        // Mover veículos que ainda não chegaram ao destino
+        // Itera sobre os veículos gerados
         for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
             if (!veiculo.chegouAoDestino()) {
+                Intersecao intersecaoAtual = veiculo.getIntersecaoAtual();
+                Semaforo semaforoAtual = intersecaoAtual.getSemaforo();
+
+                // Verifica se o semáforo está vermelho e o veículo está parado
+                if (semaforoAtual.getEstadoAtual().equals("VERMELHO")) {
+                    rastreadorDeMovimentacao.registrarParadaEmSemaforo(veiculo, intersecaoAtual);
+                } else {
+                    rastreadorDeMovimentacao.registrarMovimentacao(veiculo, intersecaoAtual, semaforoAtual.getEstadoAtual());
+                }
+
+                // Move o veículo
                 veiculo.mover();
+            } else if (!coletor.foiRegistrado(veiculo)) {
+                coletor.registrarVeiculoFinalizado(veiculo);
             }
         }
+
+        // Exibe as movimentações e o estado de cada passo da simulação
+        rastreadorDeMovimentacao.exibirMovimentacoes();
+        ConsoleMonitor.imprimirEstado(tempoAtual, intersecoes, geradorVeiculos.getVeiculos(), coletor);
     }
 
     // Método original, que chama executarPasso para todos os tempos
@@ -70,5 +93,9 @@ public class Simulador {
 
     public int getDuracaoSimulacao(){
         return duracaoSimulacao;
+    }
+
+    public ColetorEstatisticas getColetor(){
+        return coletor;
     }
 }
