@@ -58,7 +58,8 @@ public class Simulador {
 
         // Exibe as movimentações e o estado de cada passo da simulação
         rastreadorDeMovimentacao.exibirMovimentacoes();
-        ConsoleMonitor.imprimirEstado(tempoAtual, intersecoes, geradorVeiculos.getVeiculos(), coletor);
+        ConsoleMonitor.imprimirEstado(tempoAtual, intersecoes, geradorVeiculos.getVeiculos(), coletor, rastreadorDeMovimentacao);
+
     }
 
     // Método original, que chama executarPasso para todos os tempos
