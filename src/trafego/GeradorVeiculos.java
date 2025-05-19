@@ -27,40 +27,34 @@ public class GeradorVeiculos {
 
         Fila<Vertice> caminhoVertices = Dijkstra.encontrarMenorCaminho(grafo, origem.getVertice(), destino.getVertice());
 
-        System.out.println("Gerando veículo de " + origem + " para " + destino);
-
-        if (intersecoes == null || intersecoes.tamanho() < 2) {
-            System.out.println("Interseções insuficientes para gerar veículos. Tamanho: " + (intersecoes == null ? "null" : intersecoes.tamanho()));
-            return;
-        }
-
         if (caminhoVertices == null || caminhoVertices.estaVazia()) {
             System.out.println("Nenhum caminho encontrado entre " + origem + " e " + destino);
             return;
         }
 
+        // Resumo do caminho:
+        int tamanhoCaminho = caminhoVertices.tamanho();
+        Vertice primeiroVertice = caminhoVertices.obter(0);
+        Vertice ultimoVertice = caminhoVertices.obter(tamanhoCaminho - 1);
+
+        System.out.println(String.format("Caminho calculado (%d vértices): de %d até %d",
+                tamanhoCaminho, primeiroVertice.getId(), ultimoVertice.getId()));
+
+        // Continua a lógica normal pra montar caminhoIntersecoes, gerar veículo etc.
         Lista<Intersecao> caminhoIntersecoes = new Lista<>();
         while (!caminhoVertices.estaVazia()) {
             Vertice v = caminhoVertices.desenfileirar();
-            System.out.println("Checando vértice: " + v + ", Intersecao associada? " + (v.getIntersecao() != null));
             if (v.getIntersecao() != null) {
                 caminhoIntersecoes.adicionar(v.getIntersecao());
-            } else {
-                System.err.println("Erro: vértice sem intersecao associada: " + v);
             }
         }
 
-        if (caminhoIntersecoes.tamanho() == 0) {
-            System.out.println("Caminho não possui interseções válidas. Veículo não criado.");
-            return;
-        }
-
-        // Gerar um ID único para o veículo
-        int idVeiculo = random.nextInt(1000); // Exemplo de geração de ID aleatório
-        Veiculo veiculo = new Veiculo(idVeiculo, origem, destino, caminhoIntersecoes);  // Passando o ID
+        // Gerar veículo
+        Veiculo veiculo = new Veiculo(origem, destino, caminhoIntersecoes);
         veiculos.enfileirar(veiculo);
         origem.getFilaVeiculos().enfileirar(veiculo);
     }
+
 
 
     public Fila<Veiculo> getVeiculos() {

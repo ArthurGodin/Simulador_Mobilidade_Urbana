@@ -34,7 +34,7 @@ public class Dijkstra {
                     if (novaDist < distancias.get(vizinho)) {
                         distancias.put(vizinho, novaDist);
                         anteriores.put(vizinho, atual);
-                        System.out.println("Distância atualizada: " + vizinho + " - > " + novaDist);
+                        //System.out.println("Distância atualizada: " + vizinho + " - > " + novaDist);
                     }
                 }
             }
