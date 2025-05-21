@@ -15,6 +15,7 @@ public class ControladorSemaforos {
         for (int i = 0; i < intersecoes.tamanho(); i++) {
             Intersecao inter = intersecoes.obter(i);
             if (inter.getSemaforo() != null) {
+                inter.getSemaforo().atualizar();
                 heuristica.atualizarSemaforo(inter.getSemaforo(), tempoAtual);
                 heuristica.ajustarSemaforo(inter, tempoAtual);
             }

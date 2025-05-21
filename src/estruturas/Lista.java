@@ -8,6 +8,16 @@ public class Lista<T> implements Iterable<T>{
     private No<T> inicio;
     private int tamanho;
 
+
+    public boolean contem(T elemento) {
+        for (int i = 0; i < this.tamanho(); i++) {
+            if (this.obter(i).equals(elemento)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static class No<T> {
         T dado;
         No<T> proximo;
@@ -54,6 +64,11 @@ public class Lista<T> implements Iterable<T>{
 
     public boolean estaVazia() {
         return tamanho == 0;
+    }
+
+    public void clean() {
+        inicio = null;
+        tamanho = 0;
     }
 
 

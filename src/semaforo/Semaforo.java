@@ -7,7 +7,6 @@ public class Semaforo {
     private int tempoAtual;
     private String estadoAtual; // "VERDE", "AMARELO", "VERMELHO"
 
-    // Controle interno do tempo no estado
     private int tempoNoEstado = 0;
     private String estadoAnterior = "VERDE";
 
@@ -43,16 +42,6 @@ public class Semaforo {
         }
     }
 
-    // Atualiza o tempo no estado e detecta mudanças
-    public void atualizarTempoNoEstado() {
-        if (!estadoAtual.equals(estadoAnterior)) {
-            tempoNoEstado = 0;
-            estadoAnterior = estadoAtual;
-        } else {
-            tempoNoEstado++;
-        }
-    }
-
     public int getTempoNoEstado() {
         return tempoNoEstado;
     }
@@ -70,4 +59,17 @@ public class Semaforo {
     public void setEstado(String estado) {
         this.estadoAtual = estado;
     }
+
+    public void atualizarTempoNoEstado() {
+        if (!estadoAtual.equals(estadoAnterior)) {
+            // Estado mudou, reseta o contador e atualiza o estado anterior
+            tempoNoEstado = 0;
+            estadoAnterior = estadoAtual;
+        } else {
+            // Estado não mudou, incrementa o contador
+            tempoNoEstado++;
+        }
+    }
+
 }
+    

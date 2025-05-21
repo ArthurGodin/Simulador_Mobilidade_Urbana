@@ -1,34 +1,20 @@
-
-import trafego.Veiculo;
+import trafego.*;
 import estruturas.*;
 
 public class ColetorEstatisticas {
-    private Lista<Veiculo> veiculosFinalizados;
+    private Lista<Veiculo> veiculosFinalizados = new Lista<>();
 
-    public ColetorEstatisticas() {
-        this.veiculosFinalizados = new Lista<>();
-    }
-
-    public void registrarVeiculoFinalizado(Veiculo veiculo) {
-        veiculosFinalizados.adicionar(veiculo);
-    }
-
-    public void exibirEstatisticas() {
-        int totalVeiculos = veiculosFinalizados.tamanho();
-        System.out.println("Total de veículos que chegaram ao destino: " + totalVeiculos);
-        // Adicionar mais estatísticas conforme necessário
-    }
-
-    public int getTotalVeiculosFinalizados() {
-        return veiculosFinalizados.tamanho();
+    public void registrarVeiculoFinalizado(Veiculo v) {
+        if (!foiRegistrado(v)) {
+            veiculosFinalizados.adicionar(v);
+        }
     }
 
     public boolean foiRegistrado(Veiculo v) {
-        for (int i = 0; i < veiculosFinalizados.tamanho(); i++) {
-            if (veiculosFinalizados.obter(i).equals(v)) {
-                return true;
-            }
-        }
-        return false;
+        return veiculosFinalizados.contem(v);
+    }
+
+    public int getVeiculosFinalizados() {
+        return veiculosFinalizados.tamanho();
     }
 }

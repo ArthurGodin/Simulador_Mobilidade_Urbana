@@ -11,29 +11,31 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import estruturas.*;
 import cidade.*;
 import json.*;
 import trafego.*;
 import semaforo.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SimuladorVisual extends Application {
 
     private Map<Long, Circle> intersecaoCirculos = new HashMap<>();
     private Map<Long, Circle> semaforoCirculos = new HashMap<>();
-    private List<Line> ruasLinhas = new ArrayList<>();
-    private List<VeiculoVisual> veiculosVisuais = new ArrayList<>();
+    private Lista<Line> ruasLinhas = new ArrayList1<>();
+    private Lista<VeiculoVisual> veiculosVisuais = new ArrayList1<>();
 
     private Pane mapaPane;
     private Label infoLabel = new Label("Simulando...");
 
     private Grafo grafo;
     private Lista<Intersecao> intersecoes;
-    private List<Rua> ruasCidade;
+    private Lista<Rua> ruasCidade;
 
-    private Simulador simulador;
+    private Simulador simulador; // Ajuste para o nome correto do pacote / classe do simulador
 
     private static final int WIDTH = 900;
     private static final int HEIGHT = 700;
@@ -44,7 +46,7 @@ public class SimuladorVisual extends Application {
         // Se simuladorGlobal não estiver inicializado, inicializa aqui
         if (Main.simuladorGlobal == null) {
             System.out.println("Simulador não encontrado, inicializando...");
-            Main.iniciarSimulador(new String[]{});
+            Main.iniciarSimulador(new String[] {});
         }
 
         simulador = Main.simuladorGlobal;
@@ -101,12 +103,12 @@ public class SimuladorVisual extends Application {
         return new Point2D(x, y);
     }
 
-    private List<Rua> coletarRuas(Lista<Intersecao> intersecoes) {
-        List<Rua> ruas = new ArrayList<>();
+    private Lista<Rua> coletarRuas(Lista<Intersecao> intersecoes) {
+        Lista<Rua> ruas = new ArrayList1<>();
         for (int i = 0; i < intersecoes.tamanho(); i++) {
             Intersecao inter = intersecoes.obter(i);
             for (int j = 0; j < inter.getRuasSaida().tamanho(); j++) {
-                ruas.add(inter.getRuasSaida().obter(j));
+                ruas.adicionar(inter.getRuasSaida().obter(j));
             }
         }
         return ruas;
@@ -116,7 +118,7 @@ public class SimuladorVisual extends Application {
         mapaPane.getChildren().clear();
         intersecaoCirculos.clear();
         semaforoCirculos.clear();
-        ruasLinhas.clear();
+        ruasLinhas.clean();
 
         for (Rua rua : ruasCidade) {
             Point2D p1 = converterLatLonParaXY(rua.getOrigem().getVertice().getLat(), rua.getOrigem().getVertice().getLon());
@@ -125,7 +127,7 @@ public class SimuladorVisual extends Application {
             linha.setStroke(Color.GRAY);
             linha.setStrokeWidth(2);
             mapaPane.getChildren().add(linha);
-            ruasLinhas.add(linha);
+            ruasLinhas.adicionar(linha);
         }
 
         for (int i = 0; i < intersecoes.tamanho(); i++) {
@@ -144,7 +146,7 @@ public class SimuladorVisual extends Application {
     }
 
     private void criarVeiculosVisuais() {
-        veiculosVisuais.clear();
+        veiculosVisuais.clean();
         GeradorVeiculos gerador = simulador.getGeradorVeiculos();
 
         if (gerador == null) {
@@ -167,7 +169,14 @@ public class SimuladorVisual extends Application {
 
         for (int i = 0; i < veiculosReais.tamanho(); i++) {
             Veiculo v = veiculosReais.obter(i);
-            List<Point2D> caminhoPixels = new ArrayList<>();
+
+            // Verifica se o caminho não é nulo para evitar NullPointerException
+            if (v.getCaminho() == null) {
+                System.err.println("Veículo " + i + " não possui caminho definido.");
+                continue;
+            }
+
+            Lista<Point2D> caminhoPixels = new ArrayList1<>();
 
             for (int j = 0; j < v.getCaminho().tamanho(); j++) {
                 Intersecao inter = v.getCaminho().obter(j);
@@ -184,12 +193,12 @@ public class SimuladorVisual extends Application {
                 }
 
                 Point2D p = converterLatLonParaXY(vertice.getLat(), vertice.getLon());
-                caminhoPixels.add(p);
+                caminhoPixels.adicionar(p);
             }
 
-            if (!caminhoPixels.isEmpty()) {
+            if (!caminhoPixels.estaVazia()) {
                 VeiculoVisual vv = new VeiculoVisual(caminhoPixels);
-                veiculosVisuais.add(vv);
+                veiculosVisuais.adicionar(vv);
                 mapaPane.getChildren().add(vv.circulo);
             } else {
                 System.err.println("Veiculo " + i + " não possui caminho válido para visualização.");
@@ -197,41 +206,52 @@ public class SimuladorVisual extends Application {
         }
     }
 
-
     private void simularPasso() {
         for (int i = 0; i < intersecoes.tamanho(); i++) {
             Intersecao inter = intersecoes.obter(i);
             Semaforo sem = inter.getSemaforo();
             sem.atualizar();
-            Circle c = semaforoCirculos.get(inter.getVertice().getId());
-            Platform.runLater(() -> {
-                if (sem.getEstadoAtual().equals("VERDE")) c.setFill(Color.GREEN);
-                else if (sem.getEstadoAtual().equals("AMARELO")) c.setFill(Color.YELLOW);
-                else c.setFill(Color.RED);
-            });
+            Circle circuloSemaforo = semaforoCirculos.get(inter.getVertice().getId());
+
+            if (circuloSemaforo != null) {
+                // Capture a cor dentro do lambda para não ter problema com variável não final
+                Platform.runLater(() -> {
+                    switch (sem.getEstadoAtual()) {
+                        case "VERDE":
+                            circuloSemaforo.setFill(Color.GREEN);
+                            break;
+                        case "AMARELO":
+                            circuloSemaforo.setFill(Color.YELLOW);
+                            break;
+                        default:
+                            circuloSemaforo.setFill(Color.RED);
+                            break;
+                    }
+                });
+            }
         }
 
         for (VeiculoVisual vv : veiculosVisuais) {
-            vv.mover();
+            Platform.runLater(vv::mover);
         }
     }
 
     static class VeiculoVisual {
-        List<Point2D> caminho;
+        Lista<Point2D> caminho;
         int indiceAtual;
         Circle circulo;
 
-        VeiculoVisual(List<Point2D> caminho) {
+        VeiculoVisual(Lista<Point2D> caminho) {
             this.caminho = caminho;
             this.indiceAtual = 0;
-            Point2D p = caminho.get(0);
+            Point2D p = caminho.obter(0);
             this.circulo = new Circle(p.getX(), p.getY(), 6, Color.RED);
         }
 
         void mover() {
-            if (indiceAtual < caminho.size() - 1) {
-                Point2D atual = caminho.get(indiceAtual);
-                Point2D proximo = caminho.get(indiceAtual + 1);
+            if (indiceAtual < caminho.tamanho() - 1) {
+                Point2D atual = caminho.obter(indiceAtual);
+                Point2D proximo = caminho.obter(indiceAtual + 1);
 
                 double dx = proximo.getX() - circulo.getCenterX();
                 double dy = proximo.getY() - circulo.getCenterY();
