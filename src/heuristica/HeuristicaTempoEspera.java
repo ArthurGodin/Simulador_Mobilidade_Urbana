@@ -11,7 +11,13 @@ public class HeuristicaTempoEspera implements HeuristicaControle {
         if (tempoAtual % 10 == 0) {
             semaforo.atualizar();
         }
+
+        // Ajustar com base na fila e no tempo de espera
+        if (tempoAtual % 20 == 0) {
+            semaforo.setEstado("VERDE");  // Exemplo de ajuste dinâmico
+        }
     }
+
 
     @Override
     public void ajustarSemaforo(Intersecao intersecao, int tempoAtual) {

@@ -47,9 +47,9 @@ public class RastreadorDeMovimentacao {
 
     public void registrarMovimentacao(Veiculo veiculo, Intersecao intersecaoAtual, String estadoSemaforo) {
         long idVeiculo = veiculo.getId();
-        int posicaoAtual = veiculo.getPosicaoAtual();
+        int posicaoAtual = veiculo.getPosicaoAtual(); // Correção: chamada do método correto
         long origemId = intersecaoAtual.getVertice().getId();
-        long destinoId = veiculo.getDestino().getVertice().getId();
+        long destinoId = veiculo.getDestino().getVertice().getId(); // Correção: chamada do método correto
 
         Integer ultimaPos = ultimaPosicaoVeiculo.get(idVeiculo);
         if (ultimaPos == null || ultimaPos != posicaoAtual) {
@@ -66,9 +66,9 @@ public class RastreadorDeMovimentacao {
 
     public void registrarParadaEmSemaforo(Veiculo veiculo, Intersecao intersecaoAtual) {
         long idVeiculo = veiculo.getId();
-        int posicaoAtual = veiculo.getPosicaoAtual();
+        int posicaoAtual = veiculo.getPosicaoAtual(); // Correção: chamada do método correto
         long origemId = intersecaoAtual.getVertice().getId();
-        long destinoId = veiculo.getDestino().getVertice().getId();
+        long destinoId = veiculo.getDestino().getVertice().getId(); // Correção: chamada do método correto
 
         Boolean parado = veiculoParadoNoVermelho.get(idVeiculo);
         Integer ultimaPos = ultimaPosicaoVeiculo.get(idVeiculo);

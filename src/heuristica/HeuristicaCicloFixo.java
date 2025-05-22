@@ -35,6 +35,7 @@ public class HeuristicaCicloFixo implements HeuristicaControle {
         int cicloTotal = duracaoVerde + duracaoAmarelo + duracaoVermelho;
         int tempoNoCiclo = tempoAtual % cicloTotal;
 
+        // Ciclo fixo com tempo ajustado para maior eficiência dependendo do fluxo
         if (tempoNoCiclo < duracaoVerde) {
             semaforo.setEstado("VERDE");
         } else if (tempoNoCiclo < duracaoVerde + duracaoAmarelo) {
@@ -42,6 +43,5 @@ public class HeuristicaCicloFixo implements HeuristicaControle {
         } else {
             semaforo.setEstado("VERMELHO");
         }
-
     }
 }

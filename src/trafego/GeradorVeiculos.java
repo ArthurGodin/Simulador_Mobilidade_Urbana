@@ -117,7 +117,8 @@ public class GeradorVeiculos {
         // Ajusta o destino para o último vértice do caminho limitado
         Intersecao destinoLimitado = caminhoIntersecoes.obter(caminhoIntersecoes.tamanho() - 1);
 
-        Veiculo veiculo = new Veiculo(origem, destinoLimitado, caminhoIntersecoes);
+        // Passa o tempo de entrada (tempoAtual ou outro parâmetro) ao criar o veículo
+        Veiculo veiculo = new Veiculo(origem, destinoLimitado, caminhoIntersecoes, 0); // 0 como exemplo de tempoEntrada
         veiculos.enfileirar(veiculo);
         origem.getFilaVeiculos().enfileirar(veiculo);
 

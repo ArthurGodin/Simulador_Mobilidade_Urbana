@@ -1,7 +1,8 @@
-import semaforo.*;
 import cidade.*;
 import estruturas.*;
 import heuristica.HeuristicaControle;
+import semaforo.ControladorSemaforos;
+import semaforo.Semaforo;
 import trafego.GeradorVeiculos;
 import trafego.RastreadorDeMovimentacao;
 import trafego.Veiculo;
@@ -32,10 +33,31 @@ public class Simulador {
         for (int tempoAtual = 0; tempoAtual < duracaoSimulacao; tempoAtual++) {
             executarPasso(tempoAtual);
         }
+        imprimirRelatorioFinal();
+    }
+
+    public void imprimirRelatorioFinal() {
+        System.out.println("\n=== RELATÓRIO FINAL DA SIMULAÇÃO ===");
+        System.out.printf("Duração total da simulação: %d passos\n", duracaoSimulacao);
+        System.out.printf("Total de veículos criados: %d\n", geradorVeiculos.getTotalVeiculosCriados());
+        System.out.printf("Veículos que chegaram ao destino: %d\n", coletor.getVeiculosFinalizados());
+        System.out.printf("Média de tempo de viagem: %.2f passos\n", coletor.getMediaTempoViagem());
+        System.out.printf("Média de consumo energético: %.2f unidades\n", coletor.getMediaConsumoEnergetico());
+
+        // Nova saída: imprimir trajetos dos veículos
+        System.out.println("\n=== Trajetos percorridos pelos veículos ===");
+        for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
+            Lista<Intersecao> trajeto = veiculo.getTrajetoPercorrido();
+            System.out.print("Veículo ID " + veiculo.getId() + " - Trajeto: ");
+            for (int i = 0; i < trajeto.tamanho(); i++) {
+                System.out.print(trajeto.obter(i).getVertice().getId());
+                if (i < trajeto.tamanho() - 1) System.out.print(" -> ");
+            }
+            System.out.println();
+        }
     }
 
     public void executarPasso(int tempoAtual) {
-
         // Limpa flags de movimentação no início do passo
         for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
             veiculo.setMovimentouNoUltimoPasso(false);
@@ -46,14 +68,7 @@ public class Simulador {
 
         controladorSemaforos.controlarSemaforos(converterLista(intersecoes), tempoAtual);
 
-        for (Intersecao inter : converterLista(intersecoes)) {
-            Semaforo semaforo = inter.getSemaforo();
-            if (semaforo != null) {
-                rastreadorDeMovimentacao.registrarMudancaEstadoSemaforo(inter.getVertice().getId(), semaforo.getEstadoAtual());
-            }
-        }
-
-        // Usar geração espaçada e limitada de veículos
+        // Geração espaçada e limitada de veículos
         geradorVeiculos.tentarGerarVeiculo();
 
         for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
@@ -67,24 +82,18 @@ public class Simulador {
                     movimentou = true;
                     rastreadorDeMovimentacao.registrarMovimentacao(veiculo, intersecaoAtual, semaforoAtual.getEstadoAtual());
                 } else {
+                    veiculo.parar();
                     rastreadorDeMovimentacao.registrarParadaEmSemaforo(veiculo, intersecaoAtual);
                 }
 
                 veiculo.atualizarEstadoMovimento(movimentou);
-
-                if (veiculo.getPassosParadoConsecutivos() > 5) {
-                    System.out.println("ALERTA: Veículo " + veiculo.getId() + " parado por " + veiculo.getPassosParadoConsecutivos() + " passos consecutivos.");
-                }
             } else if (!coletor.foiRegistrado(veiculo)) {
                 coletor.registrarVeiculoFinalizado(veiculo);
+                veiculo.registrarChegada(tempoAtual);
             }
         }
 
         rastreadorDeMovimentacao.exibirMovimentacoes();
-
-        Lista<Veiculo> listaVeiculos = converterFilaParaLista(geradorVeiculos.getVeiculos());
-
-        ConsoleMonitor.imprimirEstado(tempoAtual, intersecoes, listaVeiculos, coletor, rastreadorDeMovimentacao);
     }
 
     private ArrayList1<Intersecao> converterLista(Lista<Intersecao> listaCustom) {
@@ -93,14 +102,6 @@ public class Simulador {
             listaJava.adicionar(listaCustom.obter(i));
         }
         return listaJava;
-    }
-
-    private Lista<Veiculo> converterFilaParaLista(Fila<Veiculo> fila) {
-        Lista<Veiculo> lista = new Lista<>();
-        for (Veiculo v : fila) {
-            lista.adicionar(v);
-        }
-        return lista;
     }
 
     public Lista<Intersecao> getIntersecoes() {

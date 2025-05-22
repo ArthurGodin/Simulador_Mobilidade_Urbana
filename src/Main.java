@@ -6,15 +6,16 @@ import trafego.*;
 
 public class Main {
 
-    // Simulador global para acesso em toda classe
+    // Simulador global para ser acessado em toda a aplicação
     public static Simulador simuladorGlobal;
 
-    public static void iniciarSimulador(String[] args) {
+    // Método para carregar dados e configurar o simulador
+    public static void inicializarSimulador(String[] args) {
         try {
-            // Duração padrão da simulação
+            // Definindo duração padrão da simulação
             int duracaoSimulacao = 20;
 
-            // Se foi passado argumento, tenta converter para inteiro
+            // Se for passado argumento, tenta converter para inteiro
             if (args.length > 0) {
                 try {
                     duracaoSimulacao = Integer.parseInt(args[0]);
@@ -25,31 +26,37 @@ public class Main {
 
             System.out.println("Carregando grafo do arquivo JSON...");
             Grafo grafo = LeitorOSMJson.carregar("json/Morada_do_Sol.json");
-            System.out.printf("Vertices carregados: %d%n", grafo.vertices.tamanho());
+            System.out.printf("Número de vértices carregados: %d%n", grafo.vertices.tamanho());
 
             System.out.println("Criando lista de interseções e vinculando vértices...");
             Lista<Intersecao> intersecoes = grafo.converterParaIntersecoes();
             System.out.printf("Total de interseções criadas: %d%n", intersecoes.tamanho());
 
-            // Mostra algumas interseções para debug
+            // Mostrando algumas interseções para conferência
             int maxPrint = Math.min(5, intersecoes.tamanho());
             for (int i = 0; i < maxPrint; i++) {
                 Intersecao inter = intersecoes.obter(i);
-                System.out.printf("Intersecao #%d: %s - Vertice: %s%n", i, inter, inter.getVertice());
+                System.out.printf("Interseção #%d: %s - Vértice: %s%n", i, inter, inter.getVertice());
             }
 
-            System.out.println("Configurando heurística adaptativa profissional...");
+            System.out.println("Configurando heurística do semáforo (ciclo fixo)...");
             HeuristicaControle heuristica = new HeuristicaCicloFixo(5, 2, 5);
 
             System.out.printf("Criando simulador com duração de %d unidades de tempo.%n", duracaoSimulacao);
             simuladorGlobal = new Simulador(intersecoes, heuristica, duracaoSimulacao, grafo);
 
-            // Configurações para controlar veículos criados e frequência de criação
-            simuladorGlobal.getGeradorVeiculos().setMaxVeiculosParaCriar(5); // máximo de 5 veículos
-            simuladorGlobal.getGeradorVeiculos().setPassosParaGerarVeiculo(1); // gera 1 veículo a cada passo
-            simuladorGlobal.getGeradorVeiculos().setLimiteMaximoVerticesCaminho(10); // limita trajetos a no máximo 15 vértices
+            // Configurações do gerador de veículos
+            simuladorGlobal.getGeradorVeiculos().setMaxVeiculosParaCriar(5);  // máximo de 5 veículos na simulação
+            simuladorGlobal.getGeradorVeiculos().setPassosParaGerarVeiculo(1); // gera 1 veículo por passo
+            simuladorGlobal.getGeradorVeiculos().setLimiteMaximoVerticesCaminho(10); // limite de 10 vértices no trajeto
 
-            System.out.println("Simulador inicializado com sucesso!");
+            // Mostrando configurações para acompanhamento
+            System.out.println("\nConfigurações do Gerador de Veículos:");
+            System.out.println("Max veículos para criar: " + simuladorGlobal.getGeradorVeiculos().getMaxVeiculosParaCriar());
+            System.out.println("Passos para gerar veículo: " + simuladorGlobal.getGeradorVeiculos().getPassosParaGerarVeiculo());
+            System.out.println("Limite máximo de vértices no caminho: " + simuladorGlobal.getGeradorVeiculos().getLimiteMaximoVerticesCaminho());
+
+            System.out.println("\nSimulador inicializado com sucesso!\n");
 
         } catch (Exception e) {
             System.err.println("Erro ao carregar ou executar a simulação:");
@@ -57,17 +64,23 @@ public class Main {
         }
     }
 
+    // Método principal de execução
     public static void main(String[] args) {
-        iniciarSimulador(args);
+        inicializarSimulador(args);
 
         if (simuladorGlobal != null) {
-            // Executa a simulação passo a passo
+            System.out.println("Iniciando a simulação...\n");
+
+            // Executa a simulação passo a passo, mostrando o estado a cada passo
             for (int tempoAtual = 0; tempoAtual < simuladorGlobal.getDuracaoSimulacao(); tempoAtual++) {
+                System.out.printf("== Passo %d ==%n", tempoAtual);
                 simuladorGlobal.executarPasso(tempoAtual);
+                System.out.println(); // Linha em branco para facilitar leitura
             }
 
-            // Imprime estatísticas finais
-            System.out.println("\nTotal de veículos criados: " + simuladorGlobal.getGeradorVeiculos().getTotalVeiculosCriados());
+            // Exibe estatísticas finais após a simulação
+            System.out.println("=== Estatísticas finais da simulação ===");
+            System.out.println("Total de veículos criados: " + simuladorGlobal.getGeradorVeiculos().getTotalVeiculosCriados());
             System.out.println("Veículos que chegaram ao destino: " + simuladorGlobal.getColetor().getVeiculosFinalizados());
 
             System.out.println("\nSimulação finalizada com sucesso!");

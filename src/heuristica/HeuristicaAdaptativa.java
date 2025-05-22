@@ -30,10 +30,13 @@ public class HeuristicaAdaptativa implements HeuristicaControle {
         String estado = semaforo.getEstadoAtual();
         int tempoNoEstado = semaforo.getTempoNoEstado();
 
+        // Lógica adaptativa: ajuste de tempos conforme o tamanho da fila
         switch (estado) {
             case "VERDE":
                 if (tempoNoEstado >= tempoMinVerde && tamanhoFila <= limiarFila) {
                     semaforo.setEstado("AMARELO");
+                } else if (tempoNoEstado >= tempoMinVerde) {
+                    semaforo.setEstado("VERDE"); // Continue verde se a fila for grande
                 }
                 break;
 
