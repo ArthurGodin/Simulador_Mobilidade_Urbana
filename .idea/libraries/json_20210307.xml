@@ -2,8 +2,10 @@
   <library name="json-20210307">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../json-20210307.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../testeterça/Simulador_Mobilidade_Urbana/out/production/Simulador_Mobilidade_Urbana/libs" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../../testeterça/Simulador_Mobilidade_Urbana/out/production/Simulador_Mobilidade_Urbana/libs" recursive="false" />
   </library>
 </component>
