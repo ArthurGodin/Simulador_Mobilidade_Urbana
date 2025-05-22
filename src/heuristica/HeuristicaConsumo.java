@@ -1,27 +1,26 @@
 package heuristica;
 
 import cidade.Intersecao;
-import semaforo.*;
-
+import semaforo.Semaforo;
 
 public class HeuristicaConsumo implements HeuristicaControle {
+
     @Override
     public void atualizarSemaforo(Semaforo semaforo, int tempoAtual) {
-        // Exemplo simplificado: alterna o estado do semáforo a cada 5 unidades de tempo
+        // A cada 5 unidades de tempo, atualiza o estado do semáforo
         if (tempoAtual % 5 == 0) {
-            semaforo.atualizar(); // Atualiza o estado com base no tempo
+            semaforo.atualizar();
         }
 
-        // Consumo de energia durante períodos de tráfego baixo
+        // A cada 30 unidades de tempo, força o semáforo para vermelho
+        // simulando redução de consumo em períodos de baixo tráfego
         if (tempoAtual % 30 == 0) {
-            semaforo.setEstado("VERMELHO"); // Reduz o tempo verde em horários de baixa demanda
+            semaforo.setEstado("VERMELHO");
         }
     }
-
 
     @Override
     public void ajustarSemaforo(Intersecao intersecao, int tempoAtual) {
-
+        // Não implementado para esta heurística
     }
 }
-

@@ -3,63 +3,63 @@ package estruturas;
 import java.util.Iterator;
 
 public class ArrayList1<T> extends Lista<T> implements Iterable<T> {
-    private T[] elementos;
-    private int tamanho;
+    private T[] elementos; // array interno para armazenar os elementos
+    private int tamanho;   // número atual de elementos na lista
 
-    // Construtor com capacidade inicial padrão
+    // Construtor padrão com capacidade inicial de 10
     public ArrayList1() {
-        this(10); // capacidade inicial padrão
+        this(10);
     }
 
-    // Construtor com capacidade personalizada
+    // Construtor com capacidade inicial personalizada
     @SuppressWarnings("unchecked")
     public ArrayList1(int capacidadeInicial) {
-        elementos = (T[]) new Object[capacidadeInicial];
+        elementos = (T[]) new Object[capacidadeInicial]; // criação do array genérico
         tamanho = 0;
     }
 
-    // Adiciona um elemento ao final da lista
+    // Adiciona elemento no final da lista, redimensionando se necessário
     public void adicionar(T elemento) {
         if (tamanho == elementos.length) {
-            redimensionar(); // dobra o tamanho
+            redimensionar(); // dobra o tamanho do array
         }
         elementos[tamanho++] = elemento;
     }
 
-    // Retorna o elemento na posição especificada
+    // Retorna o elemento na posição informada, verificando índice
     public T obter(int indice) {
         verificarIndice(indice);
-        return elementos[indice]; // O tipo aqui é T, que será Intersecao no seu caso
+        return elementos[indice];
     }
 
-    // Define (substitui) o elemento na posição especificada
+    // Substitui o elemento na posição informada
     public void definir(int indice, T elemento) {
         verificarIndice(indice);
         elementos[indice] = elemento;
     }
 
-    // Remove um elemento da posição especificada e desloca os seguintes
+    // Remove elemento na posição e desloca os subsequentes para esquerda
     public T remover(int indice) {
         verificarIndice(indice);
         T removido = elementos[indice];
         for (int i = indice; i < tamanho - 1; i++) {
             elementos[i] = elementos[i + 1];
         }
-        elementos[--tamanho] = null; // evita memory leak
+        elementos[--tamanho] = null; // evita vazamento de memória
         return removido;
     }
 
-    // Retorna o número de elementos na lista
+    // Retorna a quantidade de elementos atuais
     public int tamanho() {
         return tamanho;
     }
 
-    // Verifica se está vazio
+    // Verifica se a lista está vazia
     public boolean estaVazio() {
         return tamanho == 0;
     }
 
-    // Verifica se contém determinado elemento
+    // Verifica se a lista contém determinado elemento
     public boolean contem(T elemento) {
         for (int i = 0; i < tamanho; i++) {
             if (elementos[i].equals(elemento)) {
@@ -69,7 +69,7 @@ public class ArrayList1<T> extends Lista<T> implements Iterable<T> {
         return false;
     }
 
-    // Redimensiona o array interno para o dobro do tamanho
+    // Redimensiona o array interno para o dobro do tamanho atual
     @SuppressWarnings("unchecked")
     private void redimensionar() {
         T[] novoArray = (T[]) new Object[elementos.length * 2];
@@ -86,7 +86,7 @@ public class ArrayList1<T> extends Lista<T> implements Iterable<T> {
         }
     }
 
-    // Implementação do método iterator para a interface Iterable
+    // Iterator para permitir uso em foreach e outras operações iterativas
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {

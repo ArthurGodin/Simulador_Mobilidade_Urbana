@@ -5,10 +5,10 @@ import semaforo.Semaforo;
 
 public class HeuristicaAdaptativa implements HeuristicaControle {
 
-    private final int tempoMinVerde;     // Tempo mínimo para ficar verde
-    private final int tempoMinAmarelo;   // Tempo mínimo para amarelo
-    private final int tempoMinVermelho;  // Tempo mínimo para vermelho
-    private final int limiarFila;        // Quantidade de carros que ativa prioridade
+    private final int tempoMinVerde;     // Tempo mínimo do semáforo verde
+    private final int tempoMinAmarelo;   // Tempo mínimo do semáforo amarelo
+    private final int tempoMinVermelho;  // Tempo mínimo do semáforo vermelho
+    private final int limiarFila;        // Quantidade mínima de veículos para priorizar o verde
 
     public HeuristicaAdaptativa(int tempoMinVerde, int tempoMinAmarelo, int tempoMinVermelho, int limiarFila) {
         this.tempoMinVerde = tempoMinVerde;
@@ -19,6 +19,7 @@ public class HeuristicaAdaptativa implements HeuristicaControle {
 
     @Override
     public void atualizarSemaforo(Semaforo semaforo, int tempoAtual) {
+        // Atualiza o tempo que o semáforo está no estado atual
         semaforo.atualizarTempoNoEstado();
     }
 
@@ -30,29 +31,30 @@ public class HeuristicaAdaptativa implements HeuristicaControle {
         String estado = semaforo.getEstadoAtual();
         int tempoNoEstado = semaforo.getTempoNoEstado();
 
-        // Lógica adaptativa: ajuste de tempos conforme o tamanho da fila
+        // Decide se deve mudar o estado do semáforo baseado no tempo e tamanho da fila
         switch (estado) {
             case "VERDE":
                 if (tempoNoEstado >= tempoMinVerde && tamanhoFila <= limiarFila) {
-                    semaforo.setEstado("AMARELO");
+                    semaforo.setEstado("AMARELO");  // Muda para amarelo se tempo mínimo passou e fila pequena
                 } else if (tempoNoEstado >= tempoMinVerde) {
-                    semaforo.setEstado("VERDE"); // Continue verde se a fila for grande
+                    semaforo.setEstado("VERDE");   // Mantém verde se fila é grande
                 }
                 break;
 
             case "AMARELO":
                 if (tempoNoEstado >= tempoMinAmarelo) {
-                    semaforo.setEstado("VERMELHO");
+                    semaforo.setEstado("VERMELHO"); // Vai para vermelho após tempo mínimo amarelo
                 }
                 break;
 
             case "VERMELHO":
                 if (tempoNoEstado >= tempoMinVermelho && tamanhoFila > limiarFila) {
-                    semaforo.setEstado("VERDE");
+                    semaforo.setEstado("VERDE");    // Volta para verde se fila grande e tempo mínimo vermelho passou
                 }
                 break;
 
             default:
+                // Caso algum estado inválido apareça, seta para vermelho por segurança
                 semaforo.setEstado("VERMELHO");
                 break;
         }

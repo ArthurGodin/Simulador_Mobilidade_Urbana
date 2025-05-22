@@ -5,22 +5,17 @@ import estruturas.*;
 import java.util.Random;
 
 public class GeradorVeiculos {
-    private Lista<Intersecao> intersecoes;
-    private Fila<Veiculo> veiculos;
-    private Random random;
-    private Grafo grafo;
+    private Lista<Intersecao> intersecoes;  // Lista de interseções disponíveis
+    private Fila<Veiculo> veiculos;          // Fila com veículos gerados
+    private Random random;                   // Para escolha aleatória de origem/destino
+    private Grafo grafo;                    // Grafo para cálculo de rotas
 
-    private int totalVeiculosCriados = 0;
+    private int totalVeiculosCriados = 0;   // Contador de veículos criados
 
-    // Controle máximo de veículos criados
-    private int maxVeiculosParaCriar = Integer.MAX_VALUE;
-
-    // Controle de espaçamento na geração dos veículos
-    private int contadorPassos = 0;
-    private int passosParaGerarVeiculo = 3;
-
-    // Limite máximo de vértices no caminho do veículo
-    private int limiteMaximoVerticesCaminho = 15;
+    private int maxVeiculosParaCriar = Integer.MAX_VALUE; // Limite máximo para criação
+    private int contadorPassos = 0;         // Contador de passos para espaçar criação
+    private int passosParaGerarVeiculo = 3; // Quantidade de passos entre criações
+    private int limiteMaximoVerticesCaminho = 15; // Limite máximo de vértices no caminho
 
     public GeradorVeiculos(Lista<Intersecao> intersecoes, Grafo grafo) {
         this.grafo = grafo;
@@ -30,6 +25,7 @@ public class GeradorVeiculos {
         System.out.println("GeradorVeiculos inicializado com grafo: " + (grafo != null));
     }
 
+    // Setters para configuração dos parâmetros
     public void setMaxVeiculosParaCriar(int max) {
         this.maxVeiculosParaCriar = max;
     }
@@ -42,6 +38,7 @@ public class GeradorVeiculos {
         this.limiteMaximoVerticesCaminho = limite;
     }
 
+    // Getters para os parâmetros
     public int getMaxVeiculosParaCriar() {
         return maxVeiculosParaCriar;
     }
@@ -54,6 +51,7 @@ public class GeradorVeiculos {
         return limiteMaximoVerticesCaminho;
     }
 
+    // Tenta gerar um veículo baseado na contagem de passos e limite
     public void tentarGerarVeiculo() {
         contadorPassos++;
         if (contadorPassos >= passosParaGerarVeiculo && totalVeiculosCriados < maxVeiculosParaCriar) {
@@ -62,9 +60,10 @@ public class GeradorVeiculos {
         }
     }
 
+    // Gera um veículo com origem e destino válidos e adiciona à fila
     public void gerarVeiculo() {
         if (totalVeiculosCriados >= maxVeiculosParaCriar) {
-            return; // Não cria mais veículos
+            return; // Limite atingido, não cria mais
         }
 
         Intersecao origem;
@@ -76,10 +75,12 @@ public class GeradorVeiculos {
         do {
             origem = intersecoes.obter(random.nextInt(intersecoes.tamanho()));
             destino = intersecoes.obter(random.nextInt(intersecoes.tamanho()));
+            // Garante que origem e destino sejam diferentes
             while (destino == origem) {
                 destino = intersecoes.obter(random.nextInt(intersecoes.tamanho()));
             }
 
+            // Calcula o menor caminho entre origem e destino
             caminhoVertices = Dijkstra.encontrarMenorCaminho(grafo, origem.getVertice(), destino.getVertice());
             tamanhoCaminho = (caminhoVertices == null) ? 0 : caminhoVertices.tamanho();
 
@@ -90,7 +91,7 @@ public class GeradorVeiculos {
             }
         } while (tamanhoCaminho <= 1);
 
-        // Limita o tamanho do caminho ao máximo configurado
+        // Limita o caminho ao tamanho máximo configurado
         if (caminhoVertices.tamanho() > limiteMaximoVerticesCaminho) {
             Fila<Vertice> caminhoLimitado = new Fila<>();
             int count = 0;
@@ -107,6 +108,7 @@ public class GeradorVeiculos {
                 destino.getVertice().getId()));
 
         Lista<Intersecao> caminhoIntersecoes = new Lista<>();
+        // Converte vértices do caminho para interseções correspondentes
         while (!caminhoVertices.estaVazia()) {
             Vertice v = caminhoVertices.desenfileirar();
             if (v.getIntersecao() != null) {
@@ -114,11 +116,11 @@ public class GeradorVeiculos {
             }
         }
 
-        // Ajusta o destino para o último vértice do caminho limitado
+        // Ajusta destino para último vértice do caminho limitado
         Intersecao destinoLimitado = caminhoIntersecoes.obter(caminhoIntersecoes.tamanho() - 1);
 
-        // Passa o tempo de entrada (tempoAtual ou outro parâmetro) ao criar o veículo
-        Veiculo veiculo = new Veiculo(origem, destinoLimitado, caminhoIntersecoes, 0); // 0 como exemplo de tempoEntrada
+        // Cria o veículo com origem, destino e caminho calculado
+        Veiculo veiculo = new Veiculo(origem, destinoLimitado, caminhoIntersecoes, 0); // tempoEntrada = 0 (exemplo)
         veiculos.enfileirar(veiculo);
         origem.getFilaVeiculos().enfileirar(veiculo);
 

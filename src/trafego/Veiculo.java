@@ -15,12 +15,12 @@ public class Veiculo {
 
     private int passosParadoConsecutivos = 0;
     private int tempoEntrada;
-    private int tempoChegada = -1; // -1 significa que o veículo ainda não chegou
+    private int tempoChegada = -1; // -1 indica que o veículo ainda não chegou
     private double consumoEnergetico = 0.0;
     private static final double CONSUMO_POR_DESLOCAMENTO = 1.0;
     private static final double CONSUMO_POR_PARADA = 0.5;
 
-    // NOVO: Lista para registrar trajeto percorrido (intersecoes visitadas)
+    // Lista para registrar o trajeto percorrido (interseções visitadas)
     private Lista<Intersecao> trajetoPercorrido = new Lista<>();
 
     public Veiculo(Intersecao origem, Intersecao destino, Lista<Intersecao> caminho, int tempoEntrada) {
@@ -31,7 +31,7 @@ public class Veiculo {
         this.posicaoAtual = 0;
         this.tempoEntrada = tempoEntrada;
 
-        // Registra posição inicial no trajeto
+        // Registra a origem como primeira posição do trajeto
         if (origem != null) {
             trajetoPercorrido.adicionar(origem);
         }
@@ -41,12 +41,13 @@ public class Veiculo {
         return (int) id;
     }
 
+    // Move o veículo para a próxima posição do caminho, se ainda não chegou
     public void mover() {
         if (!chegouAoDestino()) {
             posicaoAtual++;
             consumoEnergetico += CONSUMO_POR_DESLOCAMENTO;
 
-            // Registrar a nova posição no trajeto
+            // Registra a nova posição no trajeto
             Intersecao atual = getIntersecaoAtual();
             if (atual != null) {
                 trajetoPercorrido.adicionar(atual);
@@ -58,20 +59,24 @@ public class Veiculo {
         }
     }
 
+    // Marca que o veículo está parado no semáforo e acumula consumo adicional
     public void parar() {
         estaParadoPorSemaforo = true;
         consumoEnergetico += CONSUMO_POR_PARADA;
         System.out.println("Veículo " + id + " parado por semáforo.");
     }
 
+    // Registra o tempo de chegada do veículo
     public void registrarChegada(int tempoAtual) {
         this.tempoChegada = tempoAtual;
     }
 
+    // Verifica se o veículo já chegou ao destino
     public boolean chegouAoDestino() {
         return posicaoAtual >= caminho.tamanho() - 1;
     }
 
+    // Retorna o tempo total da viagem (se já chegou)
     public int getTempoViagem() {
         if (tempoChegada == -1) return -1;
         return tempoChegada - tempoEntrada;
@@ -101,6 +106,7 @@ public class Veiculo {
         passosParadoConsecutivos++;
     }
 
+    // Atualiza estado de movimento e contabiliza passos parado ou movimentado
     public void atualizarEstadoMovimento(boolean movimentou) {
         if (movimentou) {
             resetarPassosParado();
@@ -135,6 +141,7 @@ public class Veiculo {
         return estaParadoPorSemaforo;
     }
 
+    // Retorna a interseção atual do veículo no caminho
     public Intersecao getIntersecaoAtual() {
         if (caminho != null && posicaoAtual < caminho.tamanho()) {
             return caminho.obter(posicaoAtual);

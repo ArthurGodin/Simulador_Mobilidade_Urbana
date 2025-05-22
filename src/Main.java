@@ -6,16 +6,15 @@ import trafego.*;
 
 public class Main {
 
-    // Simulador global para ser acessado em toda a aplicação
+    // Simulador global acessível em toda aplicação
     public static Simulador simuladorGlobal;
 
-    // Método para carregar dados e configurar o simulador
+    // Inicializa o simulador, carregando dados e configurando parâmetros
     public static void inicializarSimulador(String[] args) {
         try {
-            // Definindo duração padrão da simulação
-            int duracaoSimulacao = 20;
+            int duracaoSimulacao = 20; // duração padrão
 
-            // Se for passado argumento, tenta converter para inteiro
+            // Tenta ler duração da simulação a partir do argumento, se fornecido
             if (args.length > 0) {
                 try {
                     duracaoSimulacao = Integer.parseInt(args[0]);
@@ -32,7 +31,7 @@ public class Main {
             Lista<Intersecao> intersecoes = grafo.converterParaIntersecoes();
             System.out.printf("Total de interseções criadas: %d%n", intersecoes.tamanho());
 
-            // Mostrando algumas interseções para conferência
+            // Exibe algumas interseções para conferência
             int maxPrint = Math.min(5, intersecoes.tamanho());
             for (int i = 0; i < maxPrint; i++) {
                 Intersecao inter = intersecoes.obter(i);
@@ -46,11 +45,11 @@ public class Main {
             simuladorGlobal = new Simulador(intersecoes, heuristica, duracaoSimulacao, grafo);
 
             // Configurações do gerador de veículos
-            simuladorGlobal.getGeradorVeiculos().setMaxVeiculosParaCriar(5);  // máximo de 5 veículos na simulação
-            simuladorGlobal.getGeradorVeiculos().setPassosParaGerarVeiculo(1); // gera 1 veículo por passo
-            simuladorGlobal.getGeradorVeiculos().setLimiteMaximoVerticesCaminho(10); // limite de 10 vértices no trajeto
+            simuladorGlobal.getGeradorVeiculos().setMaxVeiculosParaCriar(7);  // máximo de x veículos
+            simuladorGlobal.getGeradorVeiculos().setPassosParaGerarVeiculo(1); // gera x veículo por passo
+            simuladorGlobal.getGeradorVeiculos().setLimiteMaximoVerticesCaminho(204); // limite de x vértices
 
-            // Mostrando configurações para acompanhamento
+            // Exibe configurações do gerador para acompanhamento
             System.out.println("\nConfigurações do Gerador de Veículos:");
             System.out.println("Max veículos para criar: " + simuladorGlobal.getGeradorVeiculos().getMaxVeiculosParaCriar());
             System.out.println("Passos para gerar veículo: " + simuladorGlobal.getGeradorVeiculos().getPassosParaGerarVeiculo());
@@ -64,21 +63,21 @@ public class Main {
         }
     }
 
-    // Método principal de execução
+    // Ponto de entrada principal do programa
     public static void main(String[] args) {
         inicializarSimulador(args);
 
         if (simuladorGlobal != null) {
             System.out.println("Iniciando a simulação...\n");
 
-            // Executa a simulação passo a passo, mostrando o estado a cada passo
+            // Executa a simulação passo a passo, imprimindo o estado a cada passo
             for (int tempoAtual = 0; tempoAtual < simuladorGlobal.getDuracaoSimulacao(); tempoAtual++) {
                 System.out.printf("== Passo %d ==%n", tempoAtual);
                 simuladorGlobal.executarPasso(tempoAtual);
-                System.out.println(); // Linha em branco para facilitar leitura
+                System.out.println(); // espaço para melhor leitura
             }
 
-            // Exibe estatísticas finais após a simulação
+            // Exibe estatísticas finais da simulação
             System.out.println("=== Estatísticas finais da simulação ===");
             System.out.println("Total de veículos criados: " + simuladorGlobal.getGeradorVeiculos().getTotalVeiculosCriados());
             System.out.println("Veículos que chegaram ao destino: " + simuladorGlobal.getColetor().getVeiculosFinalizados());

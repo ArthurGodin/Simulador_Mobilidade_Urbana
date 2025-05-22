@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class RastreadorDeMovimentacao {
 
+    // Classe interna que representa um registro de movimentação do veículo
     private static class Movimentacao {
         int tempo;
         long idVeiculo;
@@ -33,23 +34,25 @@ public class RastreadorDeMovimentacao {
         }
     }
 
-    private Map<Long, Integer> ultimaPosicaoVeiculo = new HashMap<>(); // veiculoID -> indice da última posição
-    private Map<Long, String> ultimoEstadoSemaforo = new HashMap<>();  // intersecaoID -> estado do semáforo
-    private Map<Long, Boolean> veiculoParadoNoVermelho = new HashMap<>(); // veiculoID -> parado no vermelho
+    private Map<Long, Integer> ultimaPosicaoVeiculo = new HashMap<>(); // Veículo ID -> última posição no caminho
+    private Map<Long, String> ultimoEstadoSemaforo = new HashMap<>();  // Interseção ID -> último estado do semáforo
+    private Map<Long, Boolean> veiculoParadoNoVermelho = new HashMap<>(); // Veículo ID -> está parado no vermelho?
 
-    private Lista<Movimentacao> movimentacoes = new ArrayList1<>();
-    private Set<Long> intersecoesComMudancaEstado = new HashSet<>();
-    private int tempoAtual;
+    private Lista<Movimentacao> movimentacoes = new ArrayList1<>(); // Lista de movimentações registradas
+    private Set<Long> intersecoesComMudancaEstado = new HashSet<>(); // Interseções com mudança recente no semáforo
+    private int tempoAtual; // Tempo atual da simulação
 
+    // Define o tempo atual da simulação
     public void setTempoAtual(int tempoAtual) {
         this.tempoAtual = tempoAtual;
     }
 
+    // Registra movimentação de veículo se posição mudou ou saiu do vermelho
     public void registrarMovimentacao(Veiculo veiculo, Intersecao intersecaoAtual, String estadoSemaforo) {
         long idVeiculo = veiculo.getId();
-        int posicaoAtual = veiculo.getPosicaoAtual(); // Correção: chamada do método correto
+        int posicaoAtual = veiculo.getPosicaoAtual();
         long origemId = intersecaoAtual.getVertice().getId();
-        long destinoId = veiculo.getDestino().getVertice().getId(); // Correção: chamada do método correto
+        long destinoId = veiculo.getDestino().getVertice().getId();
 
         Integer ultimaPos = ultimaPosicaoVeiculo.get(idVeiculo);
         if (ultimaPos == null || ultimaPos != posicaoAtual) {
@@ -64,11 +67,12 @@ public class RastreadorDeMovimentacao {
         }
     }
 
+    // Registra que veículo está parado no semáforo vermelho
     public void registrarParadaEmSemaforo(Veiculo veiculo, Intersecao intersecaoAtual) {
         long idVeiculo = veiculo.getId();
-        int posicaoAtual = veiculo.getPosicaoAtual(); // Correção: chamada do método correto
+        int posicaoAtual = veiculo.getPosicaoAtual();
         long origemId = intersecaoAtual.getVertice().getId();
-        long destinoId = veiculo.getDestino().getVertice().getId(); // Correção: chamada do método correto
+        long destinoId = veiculo.getDestino().getVertice().getId();
 
         Boolean parado = veiculoParadoNoVermelho.get(idVeiculo);
         Integer ultimaPos = ultimaPosicaoVeiculo.get(idVeiculo);
@@ -79,6 +83,7 @@ public class RastreadorDeMovimentacao {
         }
     }
 
+    // Exibe todas movimentações registradas e limpa a lista
     public void exibirMovimentacoes() {
         System.out.println("\n>> MOVIMENTAÇÕES REGISTRADAS:");
         for (Movimentacao m : movimentacoes) {
@@ -87,6 +92,7 @@ public class RastreadorDeMovimentacao {
         movimentacoes.clean();
     }
 
+    // Registra mudança de estado do semáforo para uma interseção
     public void registrarMudancaEstadoSemaforo(long idIntersecao, String novoEstado) {
         String estadoAnterior = ultimoEstadoSemaforo.get(idIntersecao);
         if (estadoAnterior == null || !estadoAnterior.equals(novoEstado)) {
@@ -95,17 +101,17 @@ public class RastreadorDeMovimentacao {
         }
     }
 
+    // Retorna interseções que tiveram mudança recente no semáforo (não modificável)
     public Set<Long> getIntersecoesComMudancaEstado() {
         return Collections.unmodifiableSet(intersecoesComMudancaEstado);
     }
 
+    // Retorna o último estado do semáforo para uma interseção
     public String getUltimoEstadoSemaforo(long idIntersecao) {
-        if (ultimoEstadoSemaforo.containsKey(idIntersecao)) {
-            return ultimoEstadoSemaforo.get(idIntersecao);
-        }
-        return "DESCONHECIDO";
+        return ultimoEstadoSemaforo.getOrDefault(idIntersecao, "DESCONHECIDO");
     }
 
+    // Limpa a lista de interseções com mudanças recentes
     public void limparMudancasEstado() {
         intersecoesComMudancaEstado.clear();
     }

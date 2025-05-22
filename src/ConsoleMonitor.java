@@ -10,6 +10,7 @@ public class ConsoleMonitor {
 
     private static final int MAX_INTERSECOES_RESUMO = 20;
 
+    // Método principal para imprimir o estado atual da simulação
     public static void imprimirEstado(int tempoAtual,
                                       Lista<Intersecao> intersecoes,
                                       Lista<Veiculo> veiculos,
@@ -20,25 +21,28 @@ public class ConsoleMonitor {
 
         Set<Long> intersecoesMudaram = rastreador.getIntersecoesComMudancaEstado();
 
-        // --- Estado dos Semáforos ---
+        // Imprime o estado dos semáforos
         if (tempoAtual == 0) {
             System.out.println(">> ESTADO DOS SEMÁFOROS (Resumo inicial):");
             int total = intersecoes.tamanho();
             int maxMostrar = Math.min(total, MAX_INTERSECOES_RESUMO);
 
             int metade = maxMostrar / 2;
+            // Imprime a primeira metade das interseções
             for (int i = 0; i < metade; i++) {
                 Intersecao inter = intersecoes.obter(i);
                 System.out.printf("Interseção %d - Estado: %s\n", inter.getVertice().getId(),
                         rastreador.getUltimoEstadoSemaforo(inter.getVertice().getId()));
             }
             if (maxMostrar < total) System.out.println("... (outras interseções omitidas) ...");
+            // Imprime a segunda metade das interseções
             for (int i = total - metade; i < total; i++) {
                 Intersecao inter = intersecoes.obter(i);
                 System.out.printf("Interseção %d - Estado: %s\n", inter.getVertice().getId(),
                         rastreador.getUltimoEstadoSemaforo(inter.getVertice().getId()));
             }
         } else {
+            // Imprime somente as mudanças de estado de semáforo ocorridas no passo atual
             System.out.println(">> ESTADO DOS SEMÁFOROS (Mudanças neste passo):");
             if (intersecoesMudaram.isEmpty()) {
                 System.out.println("(Nenhuma mudança de estado de semáforo neste passo)");
@@ -50,9 +54,8 @@ public class ConsoleMonitor {
             }
         }
 
-        // --- Caminhos calculados para cada veículo (com resumo) ---
+        // Exibe os caminhos calculados para cada veículo
         System.out.println("\n>> CAMINHOS CALCULADOS:");
-
         for (Veiculo veiculo : veiculos) {
             if (veiculo.getCaminho() == null) continue;
             Lista<Intersecao> caminho = veiculo.getCaminho();
@@ -73,6 +76,7 @@ public class ConsoleMonitor {
                             inter.getVertice().getLon());
                 }
             } else {
+                // Exibe os primeiros e últimos vértices, omitindo os intermediários para resumir
                 for (int i = 0; i < limite; i++) {
                     Intersecao inter = caminho.obter(i);
                     System.out.printf("vertice( id = %d, lat = %.7f, lon = %.7f)\n",
@@ -91,9 +95,8 @@ public class ConsoleMonitor {
             }
         }
 
-        // --- Movimentações dos veículos (mostrar só veículos que se moveram) ---
+        // Exibe as movimentações dos veículos que se moveram no último passo
         System.out.println("\n>> MOVIMENTAÇÕES:");
-
         System.out.printf("%-8s | %-12s | %-12s | %-17s | %-22s\n",
                 "Veículo", "Origem", "Destino", "Estado Semáforo", "Posição atual no caminho");
         System.out.println("---------|--------------|--------------|-------------------|------------------------");
@@ -102,7 +105,6 @@ public class ConsoleMonitor {
             Intersecao intersecaoAtual = veiculo.getIntersecaoAtual();
             if (intersecaoAtual == null) continue;
 
-            // Mostrar somente veículos que se movimentaram no último passo
             if (!veiculo.isMovimentouNoUltimoPasso()) {
                 continue;
             }
@@ -125,7 +127,7 @@ public class ConsoleMonitor {
                     posicaoAtual + 1);
         }
 
-        // --- Estatísticas ---
+        // Exibe estatísticas resumidas
         System.out.println("\n>> ESTATÍSTICAS:");
         System.out.printf("Veículos que chegaram ao destino até agora: %d\n", coletor.getVeiculosFinalizados());
 

@@ -18,6 +18,7 @@ public class Simulador {
     private ColetorEstatisticas coletor;
     private RastreadorDeMovimentacao rastreadorDeMovimentacao;
 
+    // Construtor principal do simulador
     public Simulador(Lista<Intersecao> intersecoes, HeuristicaControle heuristica, int duracaoSimulacao, Grafo grafo) {
         this.intersecoes = intersecoes;
         this.heuristica = heuristica;
@@ -29,6 +30,7 @@ public class Simulador {
         this.rastreadorDeMovimentacao = new RastreadorDeMovimentacao();
     }
 
+    // Executa toda a simulação de forma sequencial
     public void executar() {
         for (int tempoAtual = 0; tempoAtual < duracaoSimulacao; tempoAtual++) {
             executarPasso(tempoAtual);
@@ -36,6 +38,7 @@ public class Simulador {
         imprimirRelatorioFinal();
     }
 
+    // Imprime estatísticas e trajetos ao final da simulação
     public void imprimirRelatorioFinal() {
         System.out.println("\n=== RELATÓRIO FINAL DA SIMULAÇÃO ===");
         System.out.printf("Duração total da simulação: %d passos\n", duracaoSimulacao);
@@ -44,7 +47,6 @@ public class Simulador {
         System.out.printf("Média de tempo de viagem: %.2f passos\n", coletor.getMediaTempoViagem());
         System.out.printf("Média de consumo energético: %.2f unidades\n", coletor.getMediaConsumoEnergetico());
 
-        // Nova saída: imprimir trajetos dos veículos
         System.out.println("\n=== Trajetos percorridos pelos veículos ===");
         for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
             Lista<Intersecao> trajeto = veiculo.getTrajetoPercorrido();
@@ -57,8 +59,9 @@ public class Simulador {
         }
     }
 
+    // Executa um passo da simulação, atualizando veículos e semáforos
     public void executarPasso(int tempoAtual) {
-        // Limpa flags de movimentação no início do passo
+        // Resetar flags de movimentação para cada veículo
         for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
             veiculo.setMovimentouNoUltimoPasso(false);
         }
@@ -66,11 +69,13 @@ public class Simulador {
         rastreadorDeMovimentacao.limparMudancasEstado();
         rastreadorDeMovimentacao.setTempoAtual(tempoAtual);
 
+        // Atualizar estados dos semáforos
         controladorSemaforos.controlarSemaforos(converterLista(intersecoes), tempoAtual);
 
-        // Geração espaçada e limitada de veículos
+        // Tentar gerar novos veículos com base nas regras do gerador
         geradorVeiculos.tentarGerarVeiculo();
 
+        // Atualizar estados e posições dos veículos
         for (Veiculo veiculo : geradorVeiculos.getVeiculos()) {
             if (!veiculo.chegouAoDestino()) {
                 Intersecao intersecaoAtual = veiculo.getIntersecaoAtual();
@@ -96,6 +101,7 @@ public class Simulador {
         rastreadorDeMovimentacao.exibirMovimentacoes();
     }
 
+    // Converte lista customizada para ArrayList1 (Java-like) para integração
     private ArrayList1<Intersecao> converterLista(Lista<Intersecao> listaCustom) {
         ArrayList1<Intersecao> listaJava = new ArrayList1<>();
         for (int i = 0; i < listaCustom.tamanho(); i++) {
@@ -104,6 +110,7 @@ public class Simulador {
         return listaJava;
     }
 
+    // Getters para acessar propriedades importantes
     public Lista<Intersecao> getIntersecoes() {
         return intersecoes;
     }
