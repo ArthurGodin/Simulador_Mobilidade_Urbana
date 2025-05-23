@@ -1,5 +1,10 @@
 # Simulador de Mobilidade Urbana para Controle de Tráfego e Semáforos
+#Caso ocorra erros de   
+symbol:   class JSONException
+  location: class json.LeitorOSMJson
 
+
+ configurar a dependência no IntelliJ via Project Structure > libraries > clique em "+" e depois adicione a pasta Libs que está em src/libs que já está no código
 ## Resumo
 
 Este projeto apresenta um simulador de mobilidade urbana que modela a rede viária de uma cidade como um grafo, onde os nós representam interseções e as arestas representam ruas. O sistema gera veículos de forma aleatória com origem e destino definidos, calculando rotas mínimas por meio do algoritmo de Dijkstra (fornecido). O controle dos semáforos é realizado por três modelos de heurísticas adaptativas, que otimizam o fluxo de veículos e o consumo energético. A simulação gera estatísticas como tempos médios de viagem, espera e índices de congestionamento, auxiliando no estudo e na melhoria do tráfego urbano.
@@ -113,34 +118,28 @@ O sistema permite configuração dos seguintes parâmetros, que podem ser altera
 
 ---
 
-## Instruções para Execução
+## Como Executar no IntelliJ IDEA
 
-### Requisitos
+1. **Abrir o Projeto:**
+   - Abra o IntelliJ IDEA
+   - Selecione "Open" e navegue até a pasta `Simulador_Mobilidade_Urbana`
+   - Aguarde o IntelliJ indexar o projeto
 
-- Java JDK 11 ou superior instalado.
-- Sistema operacional: Windows ou Linux.
+2. **Configurar as Bibliotecas:**
+   - Clique com botão direito na pasta `src/libs`
+   - Selecione "Add as Library..."
+   - Marque "Global Library" se quiser que fique disponível para outros projetos
+   - Clique em "OK"
 
-### Passos para Compilar e Executar
+3. **Executar o Programa:**
+   - Navegue até `src/Main.java`
+   - Clique no botão "Run" (▶️) ao lado da classe `Main`
+   - Ou use o atalho Shift + F10 (Windows/Linux) ou Control + R (Mac)
 
-1. **No Windows:**
-
-Abra o Prompt de Comando na pasta do projeto:
-
-```bash
-javac -d bin src/**/*.java
-java -cp bin simulador.SimuladorMain
-```
-
-2. **No Linux:**
-
-Abra o terminal na pasta do projeto:
-
-```bash
-javac -d bin src/**/*.java
-java -cp bin simulador.SimuladorMain
-```
-
-*Nota:* Ajuste o caminho do pacote e nomes conforme sua organização do projeto.
+### Observações:
+- Certifique-se de que o arquivo `Morada_do_Sol.json` está na pasta `src/json/`
+- Se aparecer erro de `JSONException`, verifique se as bibliotecas foram adicionadas corretamente no passo 2
+- O Java Development Kit (JDK) deve estar instalado e configurado no IntelliJ
 
 ---
 
