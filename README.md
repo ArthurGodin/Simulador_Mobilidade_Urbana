@@ -98,10 +98,6 @@ Cada interseção com semáforo controla o ciclo de luzes (verde, amarelo, verme
    - Ajusta dinamicamente os tempos de verde com base no tamanho das filas de veículos.
    - Semáforo com maior fila ganha tempo de verde maior para reduzir espera.
 
-3. **Modelo 3 - Otimização do Consumo de Energia:**
-   - Prioriza minimizar paradas e deslocamentos desnecessários.
-   - Ajusta os ciclos conforme horários de pico e períodos de menor movimentação para reduzir consumo energético global.
-
 ---
 
 ## Parâmetros Configuráveis
@@ -143,19 +139,61 @@ O sistema permite configuração dos seguintes parâmetros, que podem ser altera
 
 ---
 
-## Exemplo de Saída da Simulação
+## Exemplo de Saída
 
 ```
-[12:00:01] Gerando veículo ID=101: Origem=Interseção 3, Destino=Interseção 10
-[12:00:05] Veículo ID=101 avançou para Interseção 4
-[12:00:07] Semáforo Interseção 4: Verde para rua A, tempo restante 15s
-[12:00:10] Veículo ID=101 liberado pela fila no semáforo da Interseção 4
-[12:05:30] Estatísticas:
-- Tempo médio de viagem: 420 segundos
-- Tempo médio de espera no semáforo: 35 segundos
-- Índice de congestionamento: 0.75
-- Consumo energético estimado: 1200 unidades
+Carregando grafo do arquivo JSON...
+Número de vértices carregados: 204
+
+Configurando simulador...
+- Duração: 20 unidades de tempo
+- Máximo de veículos: 7
+- Heurística: Ciclo Fixo
+
+Iniciando simulação...
+
+== Passo 0 ==
+Veículo #1: Iniciou trajeto (Origem: 10 -> Destino: 50)
+Semáforo 10: Verde (5s)
+
+== Passo 1 ==
+Veículo #1: Avançou para 11
+Veículo #2: Iniciou trajeto (Origem: 20 -> Destino: 60)
+Semáforo 11: Vermelho (2s)
+
+[... simulação continua ...]
+
+=== Estatísticas Finais ===
+Veículos criados: 7
+Veículos finalizados: 5
+Tempo médio de viagem: 15.3
+Tempo médio de espera: 4.2
+Congestionamento: 0.35
 ```
+
+### Explicação da Saída:
+
+1. **Inicialização:**
+   - Carrega o grafo do arquivo JSON
+   - Cria as interseções
+   - Configura a heurística dos semáforos
+   - Define parâmetros do gerador de veículos
+
+2. **Durante a Simulação:**
+   - Mostra cada passo da simulação
+   - Indica geração de novos veículos
+   - Mostra movimentação dos veículos
+   - Exibe estado dos semáforos
+
+3. **Estatísticas Finais:**
+   - Total de veículos gerados
+   - Veículos que completaram o trajeto
+   - Métricas de desempenho (tempos médios, congestionamento)
+
+### Observações:
+- Os números exatos podem variar entre execuções devido à natureza aleatória da simulação
+- O tempo de simulação padrão é de 20 unidades, mas pode ser alterado
+- O número máximo de veículos e outras configurações podem ser ajustadas no código
 
 ---
 
