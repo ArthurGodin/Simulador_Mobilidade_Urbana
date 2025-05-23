@@ -98,22 +98,6 @@ Cada interseção com semáforo controla o ciclo de luzes (verde, amarelo, verme
    - Ajusta dinamicamente os tempos de verde com base no tamanho das filas de veículos.
    - Semáforo com maior fila ganha tempo de verde maior para reduzir espera.
 
----
-
-## Parâmetros Configuráveis
-
-O sistema permite configuração dos seguintes parâmetros, que podem ser alterados no arquivo de configuração ou via interface (se implementada):
-
-- Número de interseções (nós) e ruas (arestas).
-- Atributos das ruas: comprimento, capacidade, tempo de travessia (pode variar para horário de pico).
-- Taxa e distribuição da geração de veículos.
-- Tempos fixos ou adaptativos do ciclo dos semáforos (verde, amarelo, vermelho).
-- Escolha do modelo de heurística (1, 2 ou 3).
-- Parâmetros para consumo energético (custo por deslocamento, parada, etc.).
-- Horários de pico para variação dinâmica.
-
----
-
 ## Como Executar no IntelliJ IDEA
 
 1. **Abrir o Projeto:**
@@ -161,14 +145,6 @@ Veículo #1: Avançou para 11
 Veículo #2: Iniciou trajeto (Origem: 20 -> Destino: 60)
 Semáforo 11: Vermelho (2s)
 
-[... simulação continua ...]
-
-=== Estatísticas Finais ===
-Veículos criados: 7
-Veículos finalizados: 5
-Tempo médio de viagem: 15.3
-Tempo médio de espera: 4.2
-Congestionamento: 0.35
 ```
 
 ### Explicação da Saída:
