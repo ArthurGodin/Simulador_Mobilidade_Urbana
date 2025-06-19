@@ -1,0 +1,173 @@
+Carregando grafo do arquivo JSON...
+Número de vértices carregados: 1922
+
+Configurando simulador...
+- Duração: 20 unidades de tempo
+- Máximo de veículos: 7
+- Heurística: Ciclo Fixo
+
+Iniciando simulação...
+
+== Passo 0 ==
+Veículo #1: Iniciou trajeto (Origem: Rua Papoulas -> Destino: Rua Papoulas)
+Veículo #1: Avançou para Rua Armando Burlamaqui
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 1 ==
+Veículo #2: Iniciou trajeto (Origem: Rua Antônio Maria de Sousa Fortes -> Destino: Rua Antônio Maria de Sousa Fortes)
+Veículo #1: Avançou para Rua Armando Burlamaqui
+Veículo #2: Avançou para Loteamento Residencial Pasargada da Nirvana
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 2 ==
+Veículo #3: Iniciou trajeto (Origem: Rua José de Lima -> Destino: Rua José de Lima)
+Veículo #1: Avançou para Rua Antonieta Ferraz
+Veículo #2: Avançou para Avenida Dom Severino
+Veículo #3: Avançou para Rua Confrontação
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 3 ==
+Veículo #4: Iniciou trajeto (Origem: Avenida Presidente Kennedy -> Destino: Avenida Presidente Kennedy)
+Veículo #1: Avançou para Rua Trevos
+Veículo #2: Avançou para Conjunto Santa Isabel
+Veículo #3: Avançou para Rua Professor Vidal Ferreira
+Veículo #4: Avançou para Rua Assis Veloso
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 4 ==
+Veículo #5: Iniciou trajeto (Origem: Rua Jaime da Silveira -> Destino: Rua Jaime da Silveira)
+Veículo #1: Avançou para Rua Begonias
+Veículo #2: Avançou para Rua Aristides Saraiva de Almeida
+Veículo #3: Avançou para Rua Antonieta Ferraz
+Veículo #4: Avançou para Rua Desembargador Helvídio Aguiar
+Veículo #5: Avançou para Avenida João Antônio Leitão
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 5 ==
+Veículo #6: Iniciou trajeto (Origem: Rua Cravos -> Destino: Rua Cravos)
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 6 ==
+Veículo #7: Iniciou trajeto (Origem: Rua Aristides Saraiva de Almeida -> Destino: Rua Aristides Saraiva de Almeida)
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 7 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 8 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 9 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 10 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 11 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 12 ==
+Veículo #1: Avançou para Rua Doutor Arnaldo Neiva
+Veículo #2: Avançou para Vila Morada do Sol
+Veículo #3: Avançou para Rua Professor Odilo Ramos
+Veículo #4: Avançou para Rua Treze
+Veículo #5: Avançou para Rua Cinéas Veloso
+Veículo #6: Avançou para Rua Assis Veloso
+Veículo #7: Avançou para Rua Poeta Carlos Drumond
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 13 ==
+Veículo #1: Avançou para Rua Teófilo dos Santos
+Veículo #2: Avançou para Rua Professor Odilo Ramos
+Veículo #3: Avançou para Rua Jaime da Silveira
+Veículo #4: Avançou para Rua Trevos
+Veículo #5: Avançou para Rua Poeta Carlos Drumond
+Veículo #6: Avançou para Rua Dezesseis
+Veículo #7: Avançou para Rua Camélias
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 14 ==
+Veículo #1: Avançou para Rua Desembargador Turenne Ribeiro
+Veículo #2: Avançou para Rua Trevos
+Veículo #3: Avançou para Rua Poeta Carlos Drumond
+Veículo #4: Avançou para Rua Professor Odilo Ramos
+Veículo #5: Avançou para Conjunto Santa Isabel
+Veículo #6: Avançou para Rua Assis Veloso
+Veículo #7: Avançou para Rua Carmélia
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 15 ==
+Veículo #1: Avançou para Rua Crescêncio Ferreira
+Veículo #2: Avançou para Rua Odílio Falcão
+Veículo #3: Avançou para Rua Paulo Cunha
+Veículo #4: Avançou para Vila Morada do Sol
+Veículo #5: Avançou para Rua Professor Vidal Ferreira
+Veículo #6: Avançou para Rua Cravos
+Veículo #7: Avançou para Rua Camélias
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 16 ==
+Veículo #1: Avançou para Parque Campestre
+Veículo #2: Avançou para Rua Cônego Raimundo Fonseca
+Veículo #3: Avançou para Rua Doutor Arnaldo Neiva
+Veículo #4: Avançou para Rua Aristides Saraiva de Almeida
+Veículo #5: Avançou para Rua Professor Odilo Ramos
+Veículo #6: Avançou para Rua Poeta Carlos Drumond
+Veículo #7: Avançou para Rua Simone
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 17 ==
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 18 ==
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 19 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+Simulação finalizada.
+Total de veículos gerados: 7
+Veículos que completaram o trajeto: 0
+Tempo médio de viagem: 0.0 unidades
+Tempo médio de espera: 0.0 unidades
+Índice de congestionamento: 1.00

@@ -1,0 +1,173 @@
+Carregando grafo do arquivo JSON...
+Número de vértices carregados: 1922
+
+Configurando simulador...
+- Duração: 20 unidades de tempo
+- Máximo de veículos: 7
+- Heurística: Ciclo Fixo
+
+Iniciando simulação...
+
+== Passo 0 ==
+Veículo #1: Iniciou trajeto (Origem: Rua Teófilo dos Santos -> Destino: Rua Teófilo dos Santos)
+Veículo #1: Avançou para Rua Professor Odilo Ramos
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 1 ==
+Veículo #2: Iniciou trajeto (Origem: Rua Líbia -> Destino: Rua Líbia)
+Veículo #1: Avançou para Rua Jaime da Silveira
+Veículo #2: Avançou para Rua Professor Odilo Ramos
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 2 ==
+Veículo #3: Iniciou trajeto (Origem: Rua Poeta Carlos Drumond -> Destino: Rua Poeta Carlos Drumond)
+Veículo #1: Avançou para Praça Jéssica Nogueira Lima
+Veículo #2: Avançou para Rua Trevos
+Veículo #3: Avançou para Rua Armando Burlamaqui
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 3 ==
+Veículo #4: Iniciou trajeto (Origem: Rua Flores -> Destino: Rua Flores)
+Veículo #1: Avançou para Praça Francisco das Chagas Oliveira
+Veículo #2: Avançou para Rua Odílio Falcão
+Veículo #3: Avançou para Rua Médico Adail Monteiro Santana
+Veículo #4: Avançou para Rua Lucílio de Albuquerque
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 4 ==
+Veículo #5: Iniciou trajeto (Origem: Rua Odílio Falcão -> Destino: Rua Odílio Falcão)
+Veículo #1: Avançou para Rua Dona Amália Castro
+Veículo #2: Avançou para Rua Cônego Raimundo Fonseca
+Veículo #3: Avançou para Rua Major Sebastião Saraiva
+Veículo #4: Avançou para Rua Major Manoel Lopes
+Veículo #5: Avançou para Rua Camélias
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 5 ==
+Veículo #6: Iniciou trajeto (Origem: Rua Bonifácio Abreu -> Destino: Rua Bonifácio Abreu)
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 6 ==
+Veículo #7: Iniciou trajeto (Origem: Conjunto Coronel Juraci Marques -> Destino: Conjunto Coronel Juraci Marques)
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 7 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 8 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 9 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 10 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 11 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+== Passo 12 ==
+Veículo #1: Avançou para Praça Balduíno Barbosa de Deus
+Veículo #2: Avançou para Avenida Senador Area Leão
+Veículo #3: Avançou para Rua Major Manoel Lopes
+Veículo #4: Avançou para Rua Papoulas
+Veículo #5: Avançou para Rua Carmélia
+Veículo #6: Avançou para Rua Major Manoel Lopes
+Veículo #7: Avançou para Praça Leda Torquato
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 13 ==
+Veículo #1: Avançou para Rua Leôncio Ferraz
+Veículo #2: Avançou para Conjunto Coronel Juraci Marques
+Veículo #3: Avançou para Rua Luísa Amélia Brandão
+Veículo #4: Avançou para Rua Doutor José Auto de Abreu
+Veículo #5: Avançou para Rua Camélias
+Veículo #6: Avançou para Rua Desembargador Turenne Ribeiro
+Veículo #7: Avançou para Rua Lucílio de Albuquerque
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 14 ==
+Veículo #1: Avançou para Rua Augusto Castro
+Veículo #2: Avançou para Rua Carlos Fortes de Pádua
+Veículo #3: Avançou para Rua Lucílio de Albuquerque
+Veículo #4: Avançou para Rua Empresário José Ferreira
+Veículo #5: Avançou para Rua Simone
+Veículo #6: Avançou para Rua Luísa Amélia Brandão
+Veículo #7: Avançou para Praça Engenheiro Adolfo Uchôa Neto
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 15 ==
+Veículo #1: Avançou para Praça Jéssica Nogueira Lima
+Veículo #2: Avançou para Rua Carlos Fortes de Pádua
+Veículo #3: Avançou para Rua Cônego Raimundo Fonseca
+Veículo #4: Avançou para Praça Jéssica Nogueira Lima
+Veículo #5: Avançou para Rua Médico Adail Monteiro Santana
+Veículo #6: Avançou para Rua Dezesseis
+Veículo #7: Avançou para Rua Senador Luís Mendes Ribeiro Gonçalves
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 16 ==
+Veículo #1: Avançou para Rua Médico Adail Monteiro Santana
+Veículo #2: Avançou para Rua Antônia Myrian Eduardo Pereira
+Veículo #3: Avançou para Rua Papoulas
+Veículo #4: Avançou para Rua Camélias
+Veículo #5: Avançou para Rua Abimael Soares da Rocha
+Veículo #6: Avançou para Rua Doutor José Auto de Abreu
+Veículo #7: Avançou para Rua Simone
+Semáforo Rua Leôncio Ferraz: VERDE (5s)
+Semáforo Rua Treze: VERDE (5s)
+Semáforo Rua Carlos Fortes de Pádua: VERDE (5s)
+
+== Passo 17 ==
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 18 ==
+Semáforo Rua Leôncio Ferraz: AMARELO 
+Semáforo Rua Treze: AMARELO 
+Semáforo Rua Carlos Fortes de Pádua: AMARELO 
+
+== Passo 19 ==
+Semáforo Rua Leôncio Ferraz: VERMELHO (2s)
+Semáforo Rua Treze: VERMELHO (2s)
+Semáforo Rua Carlos Fortes de Pádua: VERMELHO (2s)
+
+Simulação finalizada.
+Total de veículos gerados: 7
+Veículos que completaram o trajeto: 0
+Tempo médio de viagem: 0.0 unidades
+Tempo médio de espera: 0.0 unidades
+Índice de congestionamento: 1.00
